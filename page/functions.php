@@ -504,6 +504,21 @@ function nc_page_content_nav( $html_id ) {
     global $wp_query;
 
     $html_id = esc_attr( $html_id );
+    
+    if ( isset( $wp_query->query['post_type'] ) && 'page' === $wp_query->query['post_type'] ) {
+        $pages = wp_list_pages( array(
+            'title_li' => '',
+            'echo'     => false,
+        ) );
+        if ( $pages ) : ?>
+            <nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
+                <ul class="page-list">
+                    <?php echo $pages; ?>
+                </ul>
+            </nav>
+        <?php endif;
+        return;
+    }
 
     if ( $wp_query->max_num_pages > 1 ) : ?>
         <nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
