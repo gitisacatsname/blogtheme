@@ -17,15 +17,17 @@
 get_header(); ?>
 
 <?php
-// Show latest pages instead of posts on the index.
-$args = array(
-    'post_type'      => 'page',
-    'posts_per_page' => 1,
-    'orderby'        => 'date',
-    'order'          => 'DESC',
-    'paged'          => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
-);
-query_posts( $args );
+if ( is_home() ) {
+    // Show latest pages instead of posts on the index.
+    $args = array(
+        'post_type'      => 'page',
+        'posts_per_page' => 1,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'paged'          => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
+    );
+    query_posts( $args );
+}
 
 if ( have_posts() ) {
     while ( have_posts() ) {
@@ -48,6 +50,8 @@ if ( have_posts() ) {
     </article>
 <?php }
 
-wp_reset_query();
+if ( is_home() ) {
+    wp_reset_query();
+}
 
 get_footer();
