@@ -4,8 +4,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-04 12:31+0100\n"
 "PO-Revision-Date: 2013-11-04 12:31+0100\n"
-"Last-Translator: Julien Chanseaume <julien@netcod.es>\n"
-"Language-Team: Netcodes <contact@netcod.es>\n"
+"Last-Translator: Julien Chanseaume <julien@>\n"
+"Language-Team:  <contact@>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: footer.php:20
-msgid "http://www.netcod.es/"
+msgid "http://www./"
 msgstr ""
 
 #: footer.php:20
@@ -289,7 +289,7 @@ msgid "Theme Options"
 msgstr ""
 
 #: functions.php:232
-msgid "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> is a simple blog orientated theme by <a href=\"http://netcod.es/\" target=\"_blank\">Netcodes</a>.<br />"
+msgid "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> is a simple blog orientated theme by <a href=\"http:///\" target=\"_blank\"></a>.<br />"
 msgstr ""
 
 #: functions.php:233
@@ -301,15 +301,15 @@ msgid "Register your card on easID."
 msgstr ""
 
 #: functions.php:238
-msgid "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20a%20nice%20%23wordpress%20%23theme&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=_netcodes\" target=\"_blank\">Tweet about the theme</a>."
+msgid "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20a%20nice%20%23wordpress%20%23theme&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=\" target=\"_blank\">Tweet about the theme</a>."
 msgstr ""
 
 #: functions.php:239
-msgid "create a link to our site : <a href=\"http://www.netcod.es/\" target=\"_blank\">http://www.netcod.es/</a>."
+msgid "create a link to our site : <a href=\"http://www./\" target=\"_blank\">http://www./</a>."
 msgstr ""
 
 #: functions.php:240
-msgid "check out our premium wordpress products : <a href=\"http://www.netcod.es/products/\" target=\"_blank\">http://www.netcod.es/products/</a>."
+msgid "check out our premium wordpress products : <a href=\"http://www./products/\" target=\"_blank\">http://www./products/</a>."
 msgstr ""
 
 #: functions.php:241
@@ -321,7 +321,7 @@ msgid "Social Networks"
 msgstr ""
 
 #: functions.php:298
-msgid "For each social network, fill with your profile URLs, e.g. http://twitter.com/_netcodes"
+msgid "For each social network, fill with your profile URLs, e.g. http://twitter.com/"
 msgstr ""
 
 #: functions.php:322

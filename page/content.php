@@ -24,6 +24,11 @@
         </header>
 
         <?php
+        if ( is_singular() && has_post_thumbnail() ) {
+            echo '<div class="featured-image">';
+            the_post_thumbnail('large');
+            echo '</div>';
+        }
         if ( is_search() ) { // Only display Excerpts for Search ?>
         <div class="entry-summary">
             <?php the_excerpt(); ?>
