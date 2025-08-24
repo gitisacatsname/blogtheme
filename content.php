@@ -36,6 +36,16 @@
             if ( is_single() ) {
                 nc_page_single_post_nav();
             }
+            if ( is_page() && get_children( array( 'post_parent' => get_the_ID() ) ) ) {
+                echo '<ul class="child-page-list">';
+                wp_list_pages( array(
+                    'title_li'    => '',
+                    'child_of'    => get_the_ID(),
+                    'sort_column' => 'menu_order',
+                    'depth'       => 1,
+                ) );
+                echo '</ul>';
+            }
             ?>
         </div>
         <?php } ?>
