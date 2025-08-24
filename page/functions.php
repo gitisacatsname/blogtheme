@@ -119,7 +119,8 @@ function nc_page_setup() {
     add_filter( 'use_default_gallery_style', '__return_false' );
 
     // Enable Post Thumbnails support
-    //add_theme_support( 'post-thumbnails' );
+    add_theme_support( 'post-thumbnails' );
+    set_post_thumbnail_size( 740, 9999 );
 
     /*
      * This theme supports custom background color and image, and here
@@ -139,7 +140,6 @@ function nc_page_setup() {
     add_theme_support( 'custom-header', $args );
 
     // This theme uses a custom image size for featured images, displayed on "standard" posts.
-    // add_theme_support( 'post-thumbnails' );
 }
 add_action( 'after_setup_theme', 'nc_page_setup' );
 
@@ -216,39 +216,8 @@ add_action('admin_menu', 'nc_page_theme_menu');
  * Renders a simple page to display for the theme menu defined above.
  */
 function nc_page_theme_display() {
-
-    // Create a header in the default WordPress 'wrap' container
-    $html = array();
     echo '<div class="wrap page-theme">';
         echo '<h2>' . __( 'Theme Options', 'page' ) . '</h2>';
-
-        //echo '<a href="http://codecanyon.net/?ref=netcodes" target="_blank" class="product"><img src="' . get_template_directory_uri() . '/img/code-canyon.gif" alt="Code Canyon" /></a>';
-        //echo '<a href="http://themeforest.net/?ref=netcodes" target="_blank" class="product"><img src="' . get_template_directory_uri() . '/img/theme-forest.gif" alt="Theme Forest" /></a>';
-        echo '<a href="http://easid.cc/?ref=page" target="_blank" class="product"><img src="' . get_template_directory_uri() . '/img/easid-full.png" alt="easid" /></a>';
-        echo '<a href="http://cut.lu/pronto" target="_blank" class="product"><img src="' . get_template_directory_uri() . '/img/pronto.gif" alt="Pronto" /></a>';
-        echo '<a href="http://cut.lu/inject" target="_blank" class="product"><img src="' . get_template_directory_uri() . '/img/inject.gif" alt="Inject" /></a>';
-
-        echo '<p>' .
-            __( '<a href="http://cut.lu/wp-page" target="_blank">Page</a> is a simple blog orientated theme by <a href="http://netcod.es/" target="_blank">Netcodes</a>.<br />', 'page' ) .
-            __( 'You know, making a theme is a hard work. So if you like this theme, any kind of contribution would be <strong>highly appreciated</strong> :<br />', 'page' ) .
-        '</p>';
-
-        echo '<ul class="contribute">' .
-            '<li class="easid"> - <a href="https://easid.cc/" target="_blank"><strong>' . __( 'Register your card on easID.', 'page' ) . '</strong></a></li>' .
-            '<li> - ' . __( '<a href="https://twitter.com/intent/tweet?text=Page%20Theme%2C%20a%20nice%20%23wordpress%20%23theme&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=_netcodes" target="_blank">Tweet about the theme</a>.', 'page' )  . '</li>' .
-            '<li> - ' . __( 'create a link to our site : <a href="http://www.netcod.es/" target="_blank">http://www.netcod.es/</a>.', 'page' ) . '</li>' .
-            '<li> - ' . __( 'check out our premium wordpress products : <a href="http://www.netcod.es/products/" target="_blank">http://www.netcod.es/products/</a>.', 'page' ) . '</li>' .
-            '<li> - ' . __( 'follow us : ', 'page' ) . '</li>' .
-        '</ul>';
-
-        echo '<div class="follow">' .
-            '<a href="https://easid.cc/Netcodes" target="_blank"><img src="' . get_template_directory_uri() . '/img/easid.png" alt="easID" /></a>' .
-            '<a href="http://cut.lu/t" target="_blank"><img src="' . get_template_directory_uri() . '/img/twitter.png" alt="twitter" /></a>' .
-            '<a href="http://cut.lu/f" target="_blank"><img src="' . get_template_directory_uri() . '/img/facebook.png" alt="facebook" /></a>' .
-            '<a href="http://cut.lu/g" target="_blank"><img src="' . get_template_directory_uri() . '/img/google.png" alt="google" /></a>' .
-        '</div>';
-        echo '<br style="clear: both;" />';
-
         echo '<form action="options.php" method="POST">';
             settings_errors('page-settings-group');
             settings_fields( 'page-settings-group' );
@@ -256,8 +225,6 @@ function nc_page_theme_display() {
             submit_button();
         echo '</form>';
     echo '</div>';
-
-    echo implode( "\n", $html);
 
 } // end nc_page_theme_display
 
@@ -295,7 +262,7 @@ function nc_page_initialize_theme_options() {
 add_action('admin_init', 'nc_page_initialize_theme_options');
 
 function nc_page_general_settings_callback() {
-    echo '<p>' . __( 'For each social network, fill with your profile URLs, e.g. http://twitter.com/_netcodes', 'page' ) . '</p>';
+    echo '<p>' . __( 'For each social network, fill with your profile URLs, e.g. http://twitter.com/example', 'page' ) . '</p>';
 }
 
 function nc_page_field_social_callback( $args ) {
@@ -602,6 +569,15 @@ function nc_page_entry_meta_footer() {
 
     // Translators: used between list items, there is a space after the comma.
     $tag_list = get_the_tag_list( '', __( ', ', 'page' ) );
+
+    if ( is_page() ) {
+        if ( $tag_list ) {
+            printf( __( 'posted in %1$s and tagged %2$s.', 'page' ), $categories_list, $tag_list );
+        } elseif ( $categories_list ) {
+            printf( __( 'in %1$s.', 'page' ), $categories_list );
+        }
+        return;
+    }
 
     $author = sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span>',
         esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),

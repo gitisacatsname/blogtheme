@@ -5,7 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2013-11-04 12:30+0100\n"
 "PO-Revision-Date: 2013-11-04 12:32+0100\n"
 "Last-Translator: Julien Chanséaume <info@madeby-jc.com>\n"
-"Language-Team: Netcodes <contact@netcod.es>\n"
+"Language-Team:  <contact@>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: footer.php:20
-msgid "http://www.netcod.es/"
-msgstr "http://www.netcod.es/"
+msgid "http://www./"
+msgstr "http://www./"
 
 #: footer.php:20
 #, php-format
@@ -300,8 +300,8 @@ msgid "Theme Options"
 msgstr "Options du thème"
 
 #: functions.php:232
-msgid "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> is a simple blog orientated theme by <a href=\"http://netcod.es/\" target=\"_blank\">Netcodes</a>.<br />"
-msgstr "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> est un thème orienté blog de <a href=\"http://netcod.es/\" target=\"_blank\">Netcodes</a>.<br />"
+msgid "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> is a simple blog orientated theme by <a href=\"http:///\" target=\"_blank\"></a>.<br />"
+msgstr "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> est un thème orienté blog de <a href=\"http:///\" target=\"_blank\"></a>.<br />"
 
 #: functions.php:233
 msgid "You know, making a theme is a hard work. So if you like this theme, any kind of contribution would be <strong>highly appreciated</strong> :<br />"
@@ -312,16 +312,16 @@ msgid "Register your card on easID."
 msgstr "Register your card on easID."
 
 #: functions.php:238
-msgid "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20a%20nice%20%23wordpress%20%23theme&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=_netcodes\" target=\"_blank\">Tweet about the theme</a>."
-msgstr "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20un%20jolie%20%23theme%20%23wordpress&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=_netcodes\" target=\"_blank\">Faire un tweet sur le thème</a>."
+msgid "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20a%20nice%20%23wordpress%20%23theme&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=\" target=\"_blank\">Tweet about the theme</a>."
+msgstr "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20un%20jolie%20%23theme%20%23wordpress&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=\" target=\"_blank\">Faire un tweet sur le thème</a>."
 
 #: functions.php:239
-msgid "create a link to our site : <a href=\"http://www.netcod.es/\" target=\"_blank\">http://www.netcod.es/</a>."
-msgstr "faire un lien vers notre site : <a href=\"http://www.netcod.es/\" target=\"_blank\">http://www.netcod.es/</a>."
+msgid "create a link to our site : <a href=\"http://www./\" target=\"_blank\">http://www./</a>."
+msgstr "faire un lien vers notre site : <a href=\"http://www./\" target=\"_blank\">http://www./</a>."
 
 #: functions.php:240
-msgid "check out our premium wordpress products : <a href=\"http://www.netcod.es/products/\" target=\"_blank\">http://www.netcod.es/products/</a>."
-msgstr "jeter un oeil à nos produits WordPress : <a href=\"http://www.netcod.es/products/\" target=\"_blank\">http://www.netcod.es/products/</a>."
+msgid "check out our premium wordpress products : <a href=\"http://www./products/\" target=\"_blank\">http://www./products/</a>."
+msgstr "jeter un oeil à nos produits WordPress : <a href=\"http://www./products/\" target=\"_blank\">http://www./products/</a>."
 
 #: functions.php:241
 msgid "follow us : "
@@ -332,8 +332,8 @@ msgid "Social Networks"
 msgstr "Réseaux sociaux"
 
 #: functions.php:298
-msgid "For each social network, fill with your profile URLs, e.g. http://twitter.com/_netcodes"
-msgstr "Pour chaque réseau social, indiquer votre URL de profil, e.g. http://twitter.com/_netcodes"
+msgid "For each social network, fill with your profile URLs, e.g. http://twitter.com/"
+msgstr "Pour chaque réseau social, indiquer votre URL de profil, e.g. http://twitter.com/"
 
 #: functions.php:322
 #, php-format

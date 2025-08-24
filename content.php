@@ -11,7 +11,7 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
         <header>
             <?php
-            if ( is_single() ) { ?>
+            if ( is_singular() ) { ?>
             <h1 class="entry-title"><?php the_title(); ?></h1>
             <?php } else { ?>
             <h1 class="entry-title">
@@ -24,6 +24,11 @@
         </header>
 
         <?php
+        if ( is_singular() && has_post_thumbnail() ) {
+            echo '<div class="featured-image">';
+            the_post_thumbnail('large');
+            echo '</div>';
+        }
         if ( is_search() ) { // Only display Excerpts for Search ?>
         <div class="entry-summary">
             <?php the_excerpt(); ?>

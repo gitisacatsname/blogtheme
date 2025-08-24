@@ -1,9 +1,6 @@
 === Page ===
 
 Theme Name: Page
-Theme URI: http://www.netcod.es/products/page
-Author: Netcodes
-Author URI: http://www.netcod.es/
 Version: 1.03
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -33,7 +30,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 fix related to alex27 review : http://themes.trac.wordpress.org/ticket/13268
 * add support for custom-header
 * fix search form
-* fix social icon : use of Netcodes Social Icons
+* fix social icon : use of Social Icons
 * add support of threaded comments
 * fix comments navigation
 * add readme.txt file

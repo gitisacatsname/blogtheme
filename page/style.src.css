@@ -1,8 +1,5 @@
 /*!
 Theme Name: Page
-Theme URI: http://www.netcod.es/products/page
-Author: Netcodes
-Author URI: http://www.netcod.es/
 Description: Page is an ultra-clean blog theme, that lets people actually read your content. Page is fully responsive and will look perfect on desktops, tablettes or phones.
 Version: 1.03
 License: GNU General Public License v2 or later
@@ -13,6 +10,9 @@ Text Domain: page
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
+.featured-image {
+  margin-bottom: 1.5em;
+}
 @font-face {
   font-family: 'Vollkorn';
   src: url('font/Vollkorn-Regular-webfont.eot');
@@ -24,7 +24,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 @font-face {
   font-family: 'social';
   src: url('font/socicon-webfont.eot');
-  src: url('font/socicon-webfont.eot?#iefix') format('embedded-opentype'), url('font/socicon-webfont.woff') format('woff'), url('font/socicon-webfont.ttf') format('truetype'), url('font/socicon-webfont.svg#netcodes_socialregular') format('svg');
+  src: url('font/socicon-webfont.eot?#iefix') format('embedded-opentype'), url('font/socicon-webfont.woff') format('woff'), url('font/socicon-webfont.ttf') format('truetype'), url('font/socicon-webfont.svg#sociconregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1344,9 +1344,6 @@ dl.gallery-item a:hover img {
 }
 .site-socials .i-tripadvisor:hover {
   color: #000000;
-}
-.site-socials .i-netcodes:hover {
-  color: #2E3436;
 }
 .site-socials .i-easid:hover {
   color: #1ABC9C;
