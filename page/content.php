@@ -11,7 +11,7 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
         <header>
             <?php
-            if ( is_single() ) { ?>
+            if ( is_singular() ) { ?>
             <h1 class="entry-title"><?php the_title(); ?></h1>
             <?php } else { ?>
             <h1 class="entry-title">
