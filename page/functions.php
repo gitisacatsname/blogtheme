@@ -570,6 +570,15 @@ function nc_page_entry_meta_footer() {
     // Translators: used between list items, there is a space after the comma.
     $tag_list = get_the_tag_list( '', __( ', ', 'page' ) );
 
+    if ( is_page() ) {
+        if ( $tag_list ) {
+            printf( __( 'posted in %1$s and tagged %2$s.', 'page' ), $categories_list, $tag_list );
+        } elseif ( $categories_list ) {
+            printf( __( 'in %1$s.', 'page' ), $categories_list );
+        }
+        return;
+    }
+
     $author = sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span>',
         esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
         esc_attr( sprintf( __( 'View all posts by %s', 'page' ), get_the_author() ) ),
