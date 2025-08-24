@@ -41,7 +41,7 @@
             <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
             <?php } ?>
             <?php echo nc_page_get_socials_networks(); ?>
-            <?php if ( is_active_sidebar( 'sidebar' ) ) { ?><a id="pageslide-trigger" href="#sidebar">open</a><?php } ?>
+            <a id="pageslide-trigger" href="#sidebar">open</a>
         </div>
     </header>
 
