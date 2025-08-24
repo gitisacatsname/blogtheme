@@ -17,10 +17,20 @@
 get_header(); ?>
 
 <?php
+// Show latest pages instead of posts on the index.
+$args = array(
+    'post_type'      => 'page',
+    'posts_per_page' => 1,
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+    'paged'          => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
+);
+query_posts( $args );
+
 if ( have_posts() ) {
     while ( have_posts() ) {
         the_post();
-        get_template_part( 'content', get_post_format() );
+        get_template_part( 'content', 'page' );
     }
     nc_page_content_nav( 'nav-below' );
 } else { ?>
@@ -29,10 +39,16 @@ if ( have_posts() ) {
             <h1 class="entry-title"><?php _e( 'Nothing Found', 'page' ); ?></h1>
         </header>
         <div class="entry-content">
-            <p><?php _e( 'Apologies, but no results were found. Perhaps searching will help find a related post.', 'page' ); ?></p>
+            <p><?php _e( 'Apologies, but no pages were found. Perhaps searching will help find a related page.', 'page' ); ?></p>
             <?php get_search_form(); ?>
+            <ul class="page-list">
+                <?php wp_list_pages( array( 'title_li' => '' ) ); ?>
+            </ul>
         </div>
     </article>
 <?php }
 
+wp_reset_query();
+
 get_footer();
+
