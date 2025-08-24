@@ -11,7 +11,7 @@
     ) );
     if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
         echo '<ul class="category-list">';
-        wp_list_categories( array( 'title_li' => '', 'taxonomy' => 'category' ) );
+        wp_list_categories( array( 'title_li' => '', 'taxonomy' => 'category', 'hide_empty' => 0 ) );
         echo '</ul>';
     }
 
@@ -29,7 +29,7 @@
     ) );
     if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
         echo '<ul class="tag-list">';
-        wp_tag_cloud( array( 'taxonomy' => 'post_tag', 'format' => 'list' ) );
+        wp_tag_cloud( array( 'taxonomy' => 'post_tag', 'format' => 'list', 'hide_empty' => 0 ) );
         echo '</ul>';
     }
     ?>
