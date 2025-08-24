@@ -736,6 +736,17 @@ function nc_unregister_widgets() {
 }
 add_action( 'widgets_init', 'nc_unregister_widgets', 11 );
 
+// Include pages in archive, category, and tag queries.
+function nc_include_pages_in_archives( $query ) {
+    if ( is_admin() || ! $query->is_main_query() ) {
+        return;
+    }
+    if ( $query->is_date() || $query->is_category() || $query->is_tag() ) {
+        $query->set( 'post_type', 'page' );
+    }
+}
+add_action( 'pre_get_posts', 'nc_include_pages_in_archives' );
+
 // Retrieve the timestamp of the last Git commit.
 function nc_get_last_updated() {
     $dir = get_template_directory();

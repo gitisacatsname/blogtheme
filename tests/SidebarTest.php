@@ -25,9 +25,11 @@ class SidebarTest extends TestCase {
         $this->assertStringContainsString('archive-list', $output);
         $this->assertStringContainsString('tag-list', $output);
         $this->assertSame('category', $categoryArgs['taxonomy']);
+        $this->assertSame(0, $categoryArgs['hide_empty']);
         $this->assertSame('page', $archiveArgs['post_type']);
         $this->assertSame(0, $archiveArgs['echo']);
         $this->assertSame('post_tag', $tagArgs['taxonomy']);
         $this->assertSame('list', $tagArgs['format']);
+        $this->assertSame(0, $tagArgs['hide_empty']);
     }
 }
