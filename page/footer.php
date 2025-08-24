@@ -24,7 +24,7 @@
 </nav>
 <footer class="site-footer" role="contentinfo">
     <div class="site-wrapper">
-        
+        <p class="last-updated">Last updated: <?php echo esc_html( nc_get_last_updated() ); ?></p>
     </div>
 </footer>
 <?php get_sidebar(); ?>
