@@ -1,7 +1,7 @@
 Page WordPress Theme License Information
 ===========================================
 
-# Page Theme, Copyright (C) 2013 Netcodes
+# Page Theme, Copyright (C) 2013
 
 - License: GNU General Public License, v2 (or newer)
 - License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -47,7 +47,7 @@ GNU General Public License for more details.
 
 ### Socicon Font
 
-The Socicon Font, by Netcodes.
+The Socicon Font.
 
 - Source: http://socicon.com/
 - License: SIL Open Font License 1.1

@@ -17,7 +17,7 @@
 </nav>
 <footer class="site-footer" role="contentinfo">
     <div class="site-wrapper">
-        <p class="site-credits"><a href="<?php echo esc_url( __( 'http://www.netcod.es/', 'page' ) ); ?>" title="<?php esc_attr_e( 'Netcodes', 'page' ); ?>"><?php printf( __( 'design by %s', 'page' ), 'Netcodes' ); ?></a></p>
+        
     </div>
 </footer>
 <?php get_sidebar(); ?>
