@@ -1,0 +1,540 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Page 1.02\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-04 12:30+0100\n"
+"PO-Revision-Date: 2013-11-04 12:32+0100\n"
+"Last-Translator: Julien Chanséaume <info@madeby-jc.com>\n"
+"Language-Team: Netcodes <contact@netcod.es>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: footer.php:20
+msgid "http://www.netcod.es/"
+msgstr "http://www.netcod.es/"
+
+#: footer.php:20
+#, php-format
+msgid "design by %s"
+msgstr "design par %s"
+
+#: functions.php:21
+msgid "easID"
+msgstr "easID"
+
+#: functions.php:22
+msgid "Twitter"
+msgstr "Twitter"
+
+#: functions.php:23
+msgid "Facebook"
+msgstr "Facebook"
+
+#: functions.php:24
+#, fuzzy
+msgid "Google+"
+msgstr "Google +"
+
+#: functions.php:25
+msgid "Pinterest"
+msgstr "Pinterest"
+
+#: functions.php:26
+msgid "VKontakte"
+msgstr "VKontakte"
+
+#: functions.php:27
+#, fuzzy
+msgid "Linkedin"
+msgstr "LinkedIn"
+
+#: functions.php:28
+msgid "RSS"
+msgstr "RSS"
+
+#: functions.php:29
+msgid "foursquare"
+msgstr "foursquare"
+
+#: functions.php:30
+#, fuzzy
+msgid "Yahoo!"
+msgstr "Yahoo"
+
+#: functions.php:31
+msgid "skype"
+msgstr "skype"
+
+#: functions.php:32
+msgid "yelp"
+msgstr "yelp"
+
+#: functions.php:33
+msgid "FeedBurner"
+msgstr "FeedBurner"
+
+#: functions.php:34
+msgid "Viadeo"
+msgstr "Viadeo"
+
+#: functions.php:35
+msgid "Xing"
+msgstr "Xing"
+
+#: functions.php:36
+msgid "Myspace"
+msgstr "Myspace"
+
+#: functions.php:37
+#, fuzzy
+msgid "soundcloud"
+msgstr "SoundCloud"
+
+#: functions.php:38
+msgid "Spotify"
+msgstr "Spotify"
+
+#: functions.php:39
+msgid "grooveshark"
+msgstr "grooveshark"
+
+#: functions.php:40
+#, fuzzy
+msgid "last.fm"
+msgstr "Last.fm"
+
+#: functions.php:41
+msgid "YouTube"
+msgstr "YouTube"
+
+#: functions.php:42
+#, fuzzy
+msgid "vimeo"
+msgstr "Vimeo"
+
+#: functions.php:43
+msgid "Dailymotion"
+msgstr "Dailymotion"
+
+#: functions.php:44
+msgid "Vine"
+msgstr "Vine"
+
+#: functions.php:45
+#, fuzzy
+msgid "flickr"
+msgstr "Flickr"
+
+#: functions.php:46
+msgid "500px"
+msgstr "500px"
+
+#: functions.php:47
+msgid "Instagram"
+msgstr "Instagram"
+
+#: functions.php:48
+msgid "WordPress"
+msgstr "WordPress"
+
+#: functions.php:49
+#, fuzzy
+msgid "tumblr"
+msgstr "Tumblr"
+
+#: functions.php:50
+msgid "Blogger"
+msgstr "Blogger"
+
+#: functions.php:51
+msgid "Technorati"
+msgstr "Technorati"
+
+#: functions.php:52
+msgid "reddit"
+msgstr "reddit"
+
+#: functions.php:53
+#, fuzzy
+msgid "dribbble"
+msgstr "Dribbble"
+
+#: functions.php:54
+msgid "StumbleUpon"
+msgstr "StumbleUpon"
+
+#: functions.php:55
+msgid "Digg"
+msgstr "Digg"
+
+#: functions.php:56
+msgid "Envato"
+msgstr "Envato"
+
+#: functions.php:57
+msgid "Behance"
+msgstr "Behance"
+
+#: functions.php:58
+msgid "Delicious"
+msgstr "Delicious"
+
+#: functions.php:59
+msgid "deviantART"
+msgstr "deviantART"
+
+#: functions.php:60
+msgid "Forrst"
+msgstr "Forrst"
+
+#: functions.php:61
+msgid "Play Store"
+msgstr "Play Store"
+
+#: functions.php:62
+msgid "Zerply"
+msgstr "Zerply"
+
+#: functions.php:63
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: functions.php:64
+msgid "Apple"
+msgstr "Apple"
+
+#: functions.php:65
+#, fuzzy
+msgid "Flattr"
+msgstr "flattr"
+
+#: functions.php:66
+msgid "GitHub"
+msgstr "GitHub"
+
+#: functions.php:67
+msgid "Chime.in"
+msgstr "Chime.in"
+
+#: functions.php:68
+msgid "FriendFeed"
+msgstr "FriendFeed"
+
+#: functions.php:69
+#, fuzzy
+msgid "NewsVine"
+msgstr "Vine"
+
+#: functions.php:70
+msgid "Identica"
+msgstr "Identica"
+
+#: functions.php:71
+msgid "bebo"
+msgstr "bebo"
+
+#: functions.php:72
+msgid "zynga"
+msgstr "zynga"
+
+#: functions.php:73
+msgid "steam"
+msgstr "steam"
+
+#: functions.php:74
+msgid "XBOX"
+msgstr "XBOX"
+
+#: functions.php:75
+msgid "Windows"
+msgstr "Windows"
+
+#: functions.php:76
+msgid "Outlook"
+msgstr "Outlook"
+
+#: functions.php:77
+msgid "coderwall"
+msgstr "coderwall"
+
+#: functions.php:78
+msgid "tripadvisor"
+msgstr "tripadvisor"
+
+#: functions.php:79
+msgid "Lanyrd"
+msgstr "Lanyrd"
+
+#: functions.php:80
+msgid "SlideShare"
+msgstr "SlideShare"
+
+#: functions.php:81
+msgid "Buffer"
+msgstr "Buffer"
+
+#: functions.php:82
+msgid "DISQUS"
+msgstr "DISQUS"
+
+#: functions.php:116
+msgid "Footer Menu"
+msgstr "Menu Pied de page"
+
+#: functions.php:204
+#: functions.php:205
+msgid "Page Theme Options"
+msgstr "Options du thème Page"
+
+#: functions.php:223
+msgid "Theme Options"
+msgstr "Options du thème"
+
+#: functions.php:232
+msgid "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> is a simple blog orientated theme by <a href=\"http://netcod.es/\" target=\"_blank\">Netcodes</a>.<br />"
+msgstr "<a href=\"http://cut.lu/wp-page\" target=\"_blank\">Page</a> est un thème orienté blog de <a href=\"http://netcod.es/\" target=\"_blank\">Netcodes</a>.<br />"
+
+#: functions.php:233
+msgid "You know, making a theme is a hard work. So if you like this theme, any kind of contribution would be <strong>highly appreciated</strong> :<br />"
+msgstr "Vous savez, faire un thème est un travail difficile. Donc si vous appréciez le thème, toute contribution serait <strong>grandement appréciée</strong> :<br />"
+
+#: functions.php:237
+msgid "Register your card on easID."
+msgstr "Register your card on easID."
+
+#: functions.php:238
+msgid "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20a%20nice%20%23wordpress%20%23theme&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=_netcodes\" target=\"_blank\">Tweet about the theme</a>."
+msgstr "<a href=\"https://twitter.com/intent/tweet?text=Page%20Theme%2C%20un%20jolie%20%23theme%20%23wordpress&url=http%3A%2F%2Fcut.lu%2Fwp-page&via=_netcodes\" target=\"_blank\">Faire un tweet sur le thème</a>."
+
+#: functions.php:239
+msgid "create a link to our site : <a href=\"http://www.netcod.es/\" target=\"_blank\">http://www.netcod.es/</a>."
+msgstr "faire un lien vers notre site : <a href=\"http://www.netcod.es/\" target=\"_blank\">http://www.netcod.es/</a>."
+
+#: functions.php:240
+msgid "check out our premium wordpress products : <a href=\"http://www.netcod.es/products/\" target=\"_blank\">http://www.netcod.es/products/</a>."
+msgstr "jeter un oeil à nos produits WordPress : <a href=\"http://www.netcod.es/products/\" target=\"_blank\">http://www.netcod.es/products/</a>."
+
+#: functions.php:241
+msgid "follow us : "
+msgstr "nous suivre :"
+
+#: functions.php:280
+msgid "Social Networks"
+msgstr "Réseaux sociaux"
+
+#: functions.php:298
+msgid "For each social network, fill with your profile URLs, e.g. http://twitter.com/_netcodes"
+msgstr "Pour chaque réseau social, indiquer votre URL de profil, e.g. http://twitter.com/_netcodes"
+
+#: functions.php:322
+#, php-format
+msgid "Invalid url for %s : %s"
+msgstr "URL invalide pour %s : %s"
+
+#: functions.php:395
+msgid "Main Sidebar"
+msgstr "Sidebar principale"
+
+#: functions.php:397
+msgid "Appears"
+msgstr "Apparait"
+
+#: functions.php:433
+#, php-format
+msgid "Page %s"
+msgstr "Page %s"
+
+#: functions.php:446
+msgid "No Title"
+msgstr "Aucun Titre"
+
+#: functions.php:486
+msgid "Pingback:"
+msgstr "Rétrolien :"
+
+#: functions.php:486
+#: functions.php:519
+msgid "(Edit)"
+msgstr "(Modifier)"
+
+#: functions.php:500
+msgid "Post author"
+msgstr "Auteur"
+
+#: functions.php:506
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s à %2$s"
+
+#: functions.php:512
+msgid "Your comment is awaiting moderation."
+msgstr "Votre commentaire est en attente de modération."
+
+#: functions.php:518
+msgid "Reply"
+msgstr "Répondre"
+
+#: functions.php:543
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Anciens articles"
+
+#: functions.php:544
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Nouveaux articles <span class=\"meta-nav\">&rarr;</span>"
+
+#: functions.php:581
+#, php-format
+msgid "%1$s"
+msgstr "%1$s"
+
+#: functions.php:601
+#: functions.php:604
+msgid ", "
+msgstr ","
+
+#: functions.php:608
+#, php-format
+msgid "View all posts by %s"
+msgstr "Voir tous les articles de %s"
+
+#: functions.php:614
+#, php-format
+msgid "posted in %1$s and tagged %2$s <span class=\"by-author\"> by %3$s</span>."
+msgstr "dans %1$s avec les mots-clés %2$s <span class=\"by-author\"> par %3$s</span>."
+
+#: functions.php:616
+#, php-format
+msgid "in %1$s <span class=\"by-author\"> by %3$s</span>."
+msgstr "dans %1$s <span class=\"by-author\"> par %3$s</span>."
+
+#: functions.php:618
+#, php-format
+msgid "posted <span class=\"by-author\"> by %3$s</span>."
+msgstr "<span class=\"by-author\">de %3$s</span>."
+
+#: comments.php:33
+#, php-format
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "Un commentaire sur &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s commentaires sur &ldquo;%2$s&rdquo;"
+
+#: comments.php:44
+msgid "Comment navigation"
+msgstr "Navigation commentaires"
+
+#: comments.php:45
+msgid "&larr; Older Comments"
+msgstr "&larr; Anciens Commentaires"
+
+#: comments.php:46
+msgid "Newer Comments &rarr;"
+msgstr "Nouveaux Commentaires &rarr;"
+
+#: searchform.php:3
+#: searchform.php:4
+msgid "Search"
+msgstr "Rechercher"
+
+#: 404.php:15
+msgid "This is somewhat embarrassing, isn&rsquo;t it?"
+msgstr "C'est plutôt embarrassant ?"
+
+#: 404.php:19
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Nous ne trouvons pas ce que vous voulez. Une recherche vous aidera peut-être."
+
+#: index.php:29
+#: archive.php:67
+msgid "Nothing Found"
+msgstr "Rien trouvé"
+
+#: index.php:32
+#: archive.php:70
+msgid "Apologies, but no results were found. Perhaps searching will help find a related post."
+msgstr "Désolé, mais aucun résultat n'a été trouvé."
+
+#: archive.php:20
+msgid "Posts Categorized:"
+msgstr "Catégorie : "
+
+#: archive.php:25
+msgid "Posts Tagged:"
+msgstr "Taggué : "
+
+#: archive.php:33
+msgid "Posts By:"
+msgstr "Articles Par : "
+
+#: archive.php:41
+#, php-format
+msgid "About %s"
+msgstr "A propos de %s"
+
+#: archive.php:51
+msgid "Daily Archives:"
+msgstr "Archives par jour : "
+
+#: archive.php:53
+msgid "Monthly Archives:"
+msgstr "Archive par mois : "
+
+#: archive.php:55
+msgid "Yearly Archives:"
+msgstr "Archives par année : "
+
+#: content.php:18
+#, php-format
+msgid "Permalink to %s"
+msgstr "Lien vers %s"
+
+#: content.php:33
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Lire la suite <span class=\"meta-nav\">&rarr;</span> "
+
+#: content.php:35
+msgid "Pages:"
+msgstr "Pages :"
+
+#: content.php:45
+msgid "Edit"
+msgstr "Modifier"
+
+#~ msgid "Gitub"
+#~ msgstr "Gitub"
+
+#~ msgid "Rdio"
+#~ msgstr "Rdio"
+
+#~ msgid "QQ"
+#~ msgstr "QQ"
+
+#~ msgid "Dropbox"
+#~ msgstr "Dropbox"
+
+#~ msgid "Evernote"
+#~ msgstr "Evernote"
+
+#~ msgid "renren"
+#~ msgstr "renren"
+
+#~ msgid "Sina Weibo"
+#~ msgstr "Sina Weibo"
+
+#~ msgid "PayPal"
+#~ msgstr "PayPal"
+
+#~ msgid "Picasa"
+#~ msgstr "Picasa"
+
+#~ msgid "Mixi"
+#~ msgstr "Mixi"
