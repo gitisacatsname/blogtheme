@@ -759,21 +759,32 @@ function nc_get_last_updated() {
 
 // Enqueue overlay assets for playing DOOM in the browser.
 function nc_enqueue_doom_overlay_assets() {
-    $theme_uri = get_stylesheet_directory_uri();
-    $theme_dir = get_stylesheet_directory();
+    $css_rel = 'assets/doom/overlay/doom-overlay.css';
+    $js_rel  = 'assets/doom/overlay/doom-overlay.js';
 
-    wp_enqueue_style( 'doom-overlay', $theme_uri . '/assets/doom/overlay/doom-overlay.css', array(), '1.0' );
-    wp_enqueue_script( 'doom-overlay', $theme_uri . '/assets/doom/overlay/doom-overlay.js', array(), '1.0', true );
+    wp_enqueue_style(
+        'doom-overlay-css',
+        get_theme_file_uri( $css_rel ),
+        [],
+        file_exists( get_theme_file_path( $css_rel ) ) ? filemtime( get_theme_file_path( $css_rel ) ) : null
+    );
 
-    $shareware = file_exists( $theme_dir . '/assets/doom/iwads/doom1.wad' )
-        ? $theme_uri . '/assets/doom/iwads/doom1.wad'
-        : '';
+    wp_enqueue_script(
+        'doom-overlay-js',
+        get_theme_file_uri( $js_rel ),
+        [ 'jquery' ],
+        file_exists( get_theme_file_path( $js_rel ) ) ? filemtime( get_theme_file_path( $js_rel ) ) : null,
+        true
+    );
 
-    wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
-        'engineUrl'   => $theme_uri . '/assets/doom/engine/index.html',
-        'freedoomUrl' => $theme_uri . '/assets/doom/iwads/freedoom1.wad',
+    $shareware_file = 'assets/doom/iwads/doom1.wad';
+    $shareware      = file_exists( get_theme_file_path( $shareware_file ) ) ? get_theme_file_uri( $shareware_file ) : '';
+
+    wp_localize_script( 'doom-overlay-js', 'DOOM_OVERLAY_CFG', [
+        'engineUrl'   => get_theme_file_uri( 'assets/doom/engine/index.html' ),
+        'freedoomUrl' => get_theme_file_uri( 'assets/doom/iwads/freedoom1.wad' ),
         'sharewareUrl'=> $shareware,
-    ) );
+    ] );
 }
 add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
 
