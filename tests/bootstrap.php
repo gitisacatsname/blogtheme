@@ -16,4 +16,4 @@ if (!function_exists('esc_html')) {
         return $text;
     }
 }
-require_once __DIR__ . '/../page/functions.php';
+require_once __DIR__ . '/../functions.php';

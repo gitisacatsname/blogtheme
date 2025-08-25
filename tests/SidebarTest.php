@@ -18,7 +18,7 @@ class SidebarTest extends TestCase {
         Brain\Monkey\Functions\when('wp_tag_cloud')->alias(function($args) use (&$tagArgs){ $tagArgs = $args; return '<li>tag</li>'; });
 
         ob_start();
-        include __DIR__ . '/../page/sidebar.php';
+        include __DIR__ . '/../sidebar.php';
         $output = ob_get_clean();
         $this->assertStringNotContainsString('Recent Posts', $output);
         $this->assertStringContainsString('category-list', $output);

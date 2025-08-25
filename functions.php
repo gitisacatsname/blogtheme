@@ -27,14 +27,26 @@ function nc_include_pages_in_archives( $query ) {
 }
 add_action( 'pre_get_posts', 'nc_include_pages_in_archives' );
 
+// Get timestamp of last git commit for theme directory.
+function nc_get_last_updated() {
+    $dir = get_template_directory();
+    $timestamp = trim( shell_exec( 'git -C ' . escapeshellarg( $dir ) . ' log -1 --format=%cI' ) );
+    if ( empty( $timestamp ) ) {
+        $timestamp = gmdate( 'c' );
+    }
+    return $timestamp;
+}
+
 // Resolve a theme asset URI, stripping any leading page/ prefix.
 function nc_theme_file_uri( $file ) {
+    $file = ltrim( $file, '/' );
     $file = preg_replace( '#^page/#', '', $file );
     return get_theme_file_uri( $file );
 }
 
 // Resolve a theme asset path, stripping any leading page/ prefix.
 function nc_theme_file_path( $file ) {
+    $file = ltrim( $file, '/' );
     $file = preg_replace( '#^page/#', '', $file );
     return get_theme_file_path( $file );
 }
