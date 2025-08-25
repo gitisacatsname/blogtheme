@@ -59,14 +59,14 @@ class DoomOverlayTest extends TestCase {
     }
 
     public function test_theme_file_helpers_resolve_paths() {
-        Monkey\Functions\expect('get_stylesheet_directory')->times(4)->andReturn('/path/theme');
-        Monkey\Functions\expect('get_theme_file_uri')->twice()->with('page/assets/doom/overlay/doom-overlay.css')->andReturn('http://example.com/theme/page/assets/doom/overlay/doom-overlay.css');
+        Monkey\Functions\expect('get_stylesheet_directory')->times(4)->andReturn('/path/theme/page');
+        Monkey\Functions\expect('get_theme_file_uri')->twice()->with('assets/doom/overlay/doom-overlay.css')->andReturn('http://example.com/theme/page/assets/doom/overlay/doom-overlay.css');
         $uri1 = nc_theme_file_uri('page/assets/doom/overlay/doom-overlay.css');
         $this->assertSame('http://example.com/theme/page/assets/doom/overlay/doom-overlay.css', $uri1);
         $uri2 = nc_theme_file_uri('/page/assets/doom/overlay/doom-overlay.css');
         $this->assertSame('http://example.com/theme/page/assets/doom/overlay/doom-overlay.css', $uri2);
 
-        Monkey\Functions\expect('get_theme_file_path')->twice()->with('page/assets/doom/overlay/doom-overlay.css')->andReturn('/path/theme/page/assets/doom/overlay/doom-overlay.css');
+        Monkey\Functions\expect('get_theme_file_path')->twice()->with('assets/doom/overlay/doom-overlay.css')->andReturn('/path/theme/page/assets/doom/overlay/doom-overlay.css');
         $path1 = nc_theme_file_path('page/assets/doom/overlay/doom-overlay.css');
         $this->assertSame('/path/theme/page/assets/doom/overlay/doom-overlay.css', $path1);
         $path2 = nc_theme_file_path('/page/assets/doom/overlay/doom-overlay.css');
