@@ -44,16 +44,24 @@ function nc_get_last_updated() {
     return $timestamp;
 }
 
+// Normalize a theme asset path, stripping any leading page/ segment when the
+// active theme resides in a page subdirectory.
+function nc_normalize_theme_file( $file ) {
+    $file = ltrim( $file, '/' );
+    if ( 'page' === basename( get_stylesheet_directory() ) ) {
+        $file = preg_replace( '#^page/#', '', $file );
+    }
+    return $file;
+}
+
 // Resolve a theme asset URI.
 function nc_theme_file_uri( $file ) {
-    $file = ltrim( $file, '/' );
-    return get_theme_file_uri( $file );
+    return get_theme_file_uri( nc_normalize_theme_file( $file ) );
 }
 
 // Resolve a theme asset path.
 function nc_theme_file_path( $file ) {
-    $file = ltrim( $file, '/' );
-    return get_theme_file_path( $file );
+    return get_theme_file_path( nc_normalize_theme_file( $file ) );
 }
 
 // Enqueue overlay assets for playing DOOM in the browser.
