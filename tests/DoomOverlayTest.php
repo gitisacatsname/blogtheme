@@ -54,7 +54,7 @@ class DoomOverlayTest extends TestCase {
         $out = ob_get_clean();
         $this->assertStringContainsString('id="doom-procrastinate"', $out);
         $this->assertStringContainsString('iframe id="doom-frame"', $out);
-        $this->assertStringContainsString('Procrestenate', $out);
+        $this->assertStringContainsString('Procrastinate', $out);
         $this->assertStringContainsString('class="doom-here"', $out);
     }
 

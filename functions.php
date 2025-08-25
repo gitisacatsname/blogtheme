@@ -89,7 +89,7 @@ add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
 function nc_render_doom_overlay() {
     ?>
     <div id="doom-procrastinate">
-        <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Procrestenate <span class="doom-here">here!</span></button>
+        <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Procrastinate <span class="doom-here">here!</span></button>
 
         <div id="doom-frame-wrap" hidden>
             <div class="doom-bar">
