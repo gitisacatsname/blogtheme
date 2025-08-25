@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!window._doomLoaded) {
       window._doomLoaded = true;
       Dos(document.getElementById('doom-container'), {
-        wdosboxUrl: 'https://js-dos.com/v7/build/wdosbox.js'
-      }).run('https://js-dos.com/games/doom.jsdos');
+        wdosboxUrl: themeUrl + '/js/vendor/wdosbox.js'
+      }).run(themeUrl + '/js/vendor/doom.jsdos');
     }
   });
 
