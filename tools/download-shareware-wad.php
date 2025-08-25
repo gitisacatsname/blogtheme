@@ -8,7 +8,7 @@
  */
 
 if (!defined('NC_SHAREWARE_URL')) {
-    define('NC_SHAREWARE_URL', 'https://deb.debian.org/debian/pool/non-free/d/doom-wad-shareware/doom-wad-shareware_1.9.fixed.orig.tar.gz');
+    define('NC_SHAREWARE_URL', 'https://github.com/Akbar30Bill/DOOM_wads/raw/refs/heads/master/doom1.wad');
 }
 
 /**
@@ -23,37 +23,46 @@ function nc_download_shareware_wad($destDir, $url = NC_SHAREWARE_URL) {
         mkdir($destDir, 0755, true);
     }
 
-    $tmpTarGz = tempnam(sys_get_temp_dir(), 'doom') . '.tar.gz';
-    if (!copy($url, $tmpTarGz)) {
+    $tmpFile = tempnam(sys_get_temp_dir(), 'doom');
+    if (!copy($url, $tmpFile)) {
         throw new RuntimeException('Failed to download shareware WAD');
     }
 
-    $extractDir = sys_get_temp_dir() . '/doom_shareware_' . uniqid();
-    mkdir($extractDir);
-    shell_exec('tar -xzf ' . escapeshellarg($tmpTarGz) . ' -C ' . escapeshellarg($extractDir));
+    $path = parse_url($url, PHP_URL_PATH);
+    if (preg_match('/\.tar\.gz$/i', $path)) {
+        $tarGz = $tmpFile . '.tar.gz';
+        rename($tmpFile, $tarGz);
 
-    $wadSource = $extractDir . '/doom1.wad';
-    if (!file_exists($wadSource)) {
-        throw new RuntimeException('doom1.wad not found in archive');
-    }
-    copy($wadSource, $destDir . '/doom1.wad');
+        $extractDir = sys_get_temp_dir() . '/doom_shareware_' . uniqid();
+        mkdir($extractDir);
+        shell_exec('tar -xzf ' . escapeshellarg($tarGz) . ' -C ' . escapeshellarg($extractDir));
 
-    $license = $extractDir . '/debian/copyright';
-    if (file_exists($license)) {
-        copy($license, $destDir . '/doom1.copyright');
-    }
+        $wadSource = $extractDir . '/doom1.wad';
+        if (!file_exists($wadSource)) {
+            throw new RuntimeException('doom1.wad not found in archive');
+        }
+        copy($wadSource, $destDir . '/doom1.wad');
 
-    // Cleanup
-    unlink($tmpTarGz);
-    if (file_exists($wadSource)) {
-        unlink($wadSource);
-    }
-    if (file_exists($extractDir . '/debian/copyright')) {
-        unlink($extractDir . '/debian/copyright');
-        rmdir($extractDir . '/debian');
-    }
-    if (is_dir($extractDir)) {
-        rmdir($extractDir);
+        $license = $extractDir . '/debian/copyright';
+        if (file_exists($license)) {
+            copy($license, $destDir . '/doom1.copyright');
+        }
+
+        // Cleanup
+        unlink($tarGz);
+        if (file_exists($wadSource)) {
+            unlink($wadSource);
+        }
+        if (file_exists($extractDir . '/debian/copyright')) {
+            unlink($extractDir . '/debian/copyright');
+            rmdir($extractDir . '/debian');
+        }
+        if (is_dir($extractDir)) {
+            rmdir($extractDir);
+        }
+    } else {
+        copy($tmpFile, $destDir . '/doom1.wad');
+        unlink($tmpFile);
     }
 }
 
