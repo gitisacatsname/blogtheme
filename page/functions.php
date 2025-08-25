@@ -759,12 +759,14 @@ function nc_get_last_updated() {
 
 // Resolve a theme asset URI, stripping any leading page/ prefix.
 function nc_theme_file_uri( $file ) {
+    $file = ltrim( $file, '/' );
     $file = preg_replace( '#^page/#', '', $file );
     return get_theme_file_uri( $file );
 }
 
 // Resolve a theme asset path, stripping any leading page/ prefix.
 function nc_theme_file_path( $file ) {
+    $file = ltrim( $file, '/' );
     $file = preg_replace( '#^page/#', '', $file );
     return get_theme_file_path( $file );
 }

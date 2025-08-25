@@ -2,7 +2,6 @@
 use PHPUnit\Framework\TestCase;
 use Brain\Monkey;
 
-require_once __DIR__ . '/../page/functions.php';
 require_once __DIR__ . '/../tools/download-shareware-wad.php';
 
 class DoomOverlayTest extends TestCase {
@@ -59,13 +58,17 @@ class DoomOverlayTest extends TestCase {
     }
 
     public function test_theme_file_helpers_resolve_paths() {
-        Monkey\Functions\expect('get_theme_file_uri')->once()->with('assets/doom/overlay/doom-overlay.css')->andReturn('http://example.com/theme/assets/doom/overlay/doom-overlay.css');
-        $uri = nc_theme_file_uri('assets/doom/overlay/doom-overlay.css');
-        $this->assertSame('http://example.com/theme/assets/doom/overlay/doom-overlay.css', $uri);
+        Monkey\Functions\expect('get_theme_file_uri')->twice()->with('assets/doom/overlay/doom-overlay.css')->andReturn('http://example.com/theme/assets/doom/overlay/doom-overlay.css');
+        $uri1 = nc_theme_file_uri('page/assets/doom/overlay/doom-overlay.css');
+        $this->assertSame('http://example.com/theme/assets/doom/overlay/doom-overlay.css', $uri1);
+        $uri2 = nc_theme_file_uri('/page/assets/doom/overlay/doom-overlay.css');
+        $this->assertSame('http://example.com/theme/assets/doom/overlay/doom-overlay.css', $uri2);
 
-        Monkey\Functions\expect('get_theme_file_path')->once()->with('assets/doom/overlay/doom-overlay.css')->andReturn('/path/theme/assets/doom/overlay/doom-overlay.css');
-        $path = nc_theme_file_path('assets/doom/overlay/doom-overlay.css');
-        $this->assertSame('/path/theme/assets/doom/overlay/doom-overlay.css', $path);
+        Monkey\Functions\expect('get_theme_file_path')->twice()->with('assets/doom/overlay/doom-overlay.css')->andReturn('/path/theme/assets/doom/overlay/doom-overlay.css');
+        $path1 = nc_theme_file_path('page/assets/doom/overlay/doom-overlay.css');
+        $this->assertSame('/path/theme/assets/doom/overlay/doom-overlay.css', $path1);
+        $path2 = nc_theme_file_path('/page/assets/doom/overlay/doom-overlay.css');
+        $this->assertSame('/path/theme/assets/doom/overlay/doom-overlay.css', $path2);
     }
 
     public function test_download_shareware_wad_extracts_file() {

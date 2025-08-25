@@ -33,7 +33,7 @@ class FunctionsTest extends TestCase {
 
     public function test_get_last_updated_uses_git() {
         Brain\Monkey\Functions\when('get_template_directory')
-            ->justReturn(realpath(__DIR__ . '/../page'));
+            ->justReturn(realpath(__DIR__ . '/..'));
         $result = nc_get_last_updated();
         $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}T/', $result);
     }
