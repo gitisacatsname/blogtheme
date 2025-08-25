@@ -7,7 +7,9 @@
  * information alongside the WAD.
  */
 
-const NC_SHAREWARE_URL = 'https://deb.debian.org/debian/pool/non-free/d/doom-wad-shareware/doom-wad-shareware_1.9.fixed.orig.tar.gz';
+if (!defined('NC_SHAREWARE_URL')) {
+    define('NC_SHAREWARE_URL', 'https://deb.debian.org/debian/pool/non-free/d/doom-wad-shareware/doom-wad-shareware_1.9.fixed.orig.tar.gz');
+}
 
 /**
  * Download the shareware WAD to the given directory.
@@ -56,7 +58,7 @@ function nc_download_shareware_wad($destDir, $url = NC_SHAREWARE_URL) {
 }
 
 if (PHP_SAPI === 'cli' && isset($argv) && realpath($argv[0]) === __FILE__) {
-    $dest = dirname(__DIR__) . '/assets/doom/iwads';
+    $dest = dirname(__DIR__) . '/page/assets/doom/iwads';
     nc_download_shareware_wad($dest);
     echo "Downloaded shareware WAD to $dest\n";
 }

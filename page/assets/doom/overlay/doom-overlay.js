@@ -19,6 +19,10 @@
     const btnFreedoom = qs('.doom-iwad-freedoom', root);
     const btnShare = qs('.doom-iwad-shareware', root);
 
+    [DOOM_OVERLAY_CFG.freedoomUrl, DOOM_OVERLAY_CFG.sharewareUrl].forEach(u => {
+      if (u) fetch(u, {mode: 'no-cors'}).catch(() => {});
+    });
+
     function open(iwadUrl) {
       wrap.hidden = false;
       const url = setIWADParam(DOOM_OVERLAY_CFG.engineUrl, iwadUrl || null);
@@ -32,10 +36,6 @@
     });
 
     btnShare?.addEventListener('click', () => {
-      if (!DOOM_OVERLAY_CFG.sharewareUrl) {
-        alert('Shareware WAD not bundled. Ask the admin to add doom1.wad or enable auto-download.');
-        return;
-      }
       frame.src = setIWADParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.sharewareUrl);
     });
 
