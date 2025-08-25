@@ -54,4 +54,16 @@ if ( is_home() ) {
     wp_reset_query();
 }
 
+?>
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/procrastinate.css">
+<div id="procrastinate-btn"></div>
+<div id="doom-overlay">
+    <div id="doom-container"></div>
+    <button id="close-doom">Close</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+<script src="https://js-dos.com/v7/build/dos.js"></script>
+<script>var themeUrl = "<?php echo get_template_directory_uri(); ?>";</script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/procrastinate.js"></script>
+<?php
 get_footer();
