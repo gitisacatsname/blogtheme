@@ -12,10 +12,10 @@
  */
 
 if ( ! defined( 'NC_FREEDOOM_URL' ) ) {
-    define( 'NC_FREEDOOM_URL', 'https://github.com/freedoom/freedoom/releases/latest/download/freedoom1.wad' );
+    define( 'NC_FREEDOOM_URL', 'https://github.com/freedoom/historic/raw/refs/heads/trunk/0.6.4/freedoom2.wad' );
 }
 if ( ! defined( 'NC_SHAREWARE_URL' ) ) {
-    define( 'NC_SHAREWARE_URL', 'https://distro.ibiblio.org/slitaz/official/5.0/doom1.wad' );
+    define( 'NC_SHAREWARE_URL', 'https://github.com/Akbar30Bill/DOOM_wads/raw/refs/heads/master/doom1.wad' );
 }
 
 /**

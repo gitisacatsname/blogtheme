@@ -91,4 +91,23 @@ class DoomOverlayTest extends TestCase {
         unlink($tempDir . '/doom1.wad');
         rmdir($tempDir);
     }
+
+    public function test_download_shareware_wad_copies_direct_file() {
+        $tempDir = sys_get_temp_dir() . '/wadtest_' . uniqid();
+        mkdir($tempDir);
+
+        $wad = $tempDir . '/doom1.wad';
+        file_put_contents($wad, 'wad');
+
+        $destDir = $tempDir . '/dest';
+        nc_download_shareware_wad($destDir, 'file://' . $wad);
+        $this->assertFileExists($destDir . '/doom1.wad');
+        $this->assertSame('wad', file_get_contents($destDir . '/doom1.wad'));
+
+        // cleanup
+        unlink($wad);
+        unlink($destDir . '/doom1.wad');
+        rmdir($destDir);
+        rmdir($tempDir);
+    }
 }
