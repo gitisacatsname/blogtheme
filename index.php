@@ -61,8 +61,8 @@ if ( is_home() ) {
     <div id="doom-container"></div>
     <button id="close-doom">Close</button>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
-<script src="https://js-dos.com/v7/build/dos.js"></script>
+    <script src="<?php echo get_template_directory_uri(); ?>/js/vendor/lottie.min.js"></script>
+    <script src="<?php echo get_template_directory_uri(); ?>/js/vendor/dos.js"></script>
 <script>var themeUrl = "<?php echo get_template_directory_uri(); ?>";</script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/procrastinate.js"></script>
 <?php
