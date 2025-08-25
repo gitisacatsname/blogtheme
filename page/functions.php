@@ -11,6 +11,13 @@
  * @since Page 1.0
  */
 
+if ( ! defined( 'NC_FREEDOOM_URL' ) ) {
+    define( 'NC_FREEDOOM_URL', 'https://github.com/freedoom/freedoom/releases/latest/download/freedoom1.wad' );
+}
+if ( ! defined( 'NC_SHAREWARE_URL' ) ) {
+    define( 'NC_SHAREWARE_URL', 'https://distro.ibiblio.org/slitaz/official/5.0/doom1.wad' );
+}
+
 /**
  * Sets up the content width value based on the theme's design and stylesheet.
  */
@@ -757,41 +764,35 @@ function nc_get_last_updated() {
     return $timestamp;
 }
 
-// Resolve a theme asset URI, stripping any leading page/ prefix.
+// Resolve a theme asset URI.
 function nc_theme_file_uri( $file ) {
     $file = ltrim( $file, '/' );
-    $file = preg_replace( '#^page/#', '', $file );
     return get_theme_file_uri( $file );
 }
 
-// Resolve a theme asset path, stripping any leading page/ prefix.
+// Resolve a theme asset path.
 function nc_theme_file_path( $file ) {
     $file = ltrim( $file, '/' );
-    $file = preg_replace( '#^page/#', '', $file );
     return get_theme_file_path( $file );
 }
 
 // Enqueue overlay assets for playing DOOM in the browser.
 function nc_enqueue_doom_overlay_assets() {
-    $css_rel = 'assets/doom/overlay/doom-overlay.css';
+    $css_rel = 'page/assets/doom/overlay/doom-overlay.css';
     $css_path = nc_theme_file_path( $css_rel );
     $css_ver = file_exists( $css_path ) ? filemtime( $css_path ) : null;
 
-    $js_rel = 'assets/doom/overlay/doom-overlay.js';
+    $js_rel = 'page/assets/doom/overlay/doom-overlay.js';
     $js_path = nc_theme_file_path( $js_rel );
     $js_ver = file_exists( $js_path ) ? filemtime( $js_path ) : null;
 
     wp_enqueue_style( 'doom-overlay', nc_theme_file_uri( $css_rel ), array(), $css_ver );
     wp_enqueue_script( 'doom-overlay', nc_theme_file_uri( $js_rel ), array( 'jquery' ), $js_ver, true );
 
-    $shareware_rel = 'assets/doom/iwads/doom1.wad';
-    $shareware_path = nc_theme_file_path( $shareware_rel );
-    $shareware = file_exists( $shareware_path ) ? nc_theme_file_uri( $shareware_rel ) : '';
-
     wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
-        'engineUrl'   => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
-        'freedoomUrl' => nc_theme_file_uri( 'assets/doom/iwads/freedoom1.wad' ),
-        'sharewareUrl'=> $shareware,
+        'engineUrl'   => nc_theme_file_uri( 'page/assets/doom/engine/index.html' ),
+        'freedoomUrl' => NC_FREEDOOM_URL,
+        'sharewareUrl'=> NC_SHAREWARE_URL,
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
@@ -800,7 +801,7 @@ add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
 function nc_render_doom_overlay() {
     ?>
     <div id="doom-procrastinate">
-        <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Play DOOM</button>
+        <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Procrestenate <span class="doom-here">here!</span></button>
 
         <div id="doom-frame-wrap" hidden>
             <div class="doom-bar">
