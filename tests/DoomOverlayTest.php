@@ -11,22 +11,40 @@ class DoomOverlayTest extends TestCase {
 
     public function test_enqueue_doom_overlay_assets() {
         $tempDir = sys_get_temp_dir() . '/theme_' . uniqid();
-        mkdir($tempDir . '/assets/doom/iwads', 0777, true);
+        mkdir($tempDir . '/assets/doom/overlay', 0777, true);
 
-        Monkey\Functions\expect('get_stylesheet_directory_uri')->andReturn('http://example.com/theme');
-        Monkey\Functions\expect('get_stylesheet_directory')->andReturn($tempDir);
-        Monkey\Functions\expect('wp_enqueue_style')->once()->with('doom-overlay', 'http://example.com/theme/assets/doom/overlay/doom-overlay.css', [], '1.0');
-        Monkey\Functions\expect('wp_enqueue_script')->once()->with('doom-overlay', 'http://example.com/theme/assets/doom/overlay/doom-overlay.js', [], '1.0', true);
+        file_put_contents($tempDir . '/assets/doom/overlay/doom-overlay.css', '');
+        file_put_contents($tempDir . '/assets/doom/overlay/doom-overlay.js', '');
+        $cssMtime = filemtime($tempDir . '/assets/doom/overlay/doom-overlay.css');
+        $jsMtime = filemtime($tempDir . '/assets/doom/overlay/doom-overlay.js');
+
+        $themeUri = 'http://example.com/theme';
+
+        Monkey\Functions\expect('get_stylesheet_directory_uri')->never();
+        Monkey\Functions\expect('get_stylesheet_directory')->never();
+
+        Monkey\Functions\expect('get_theme_file_uri')->times(4)->andReturnUsing(function ($rel) use ($themeUri) {
+            return $themeUri . '/' . $rel;
+        });
+        Monkey\Functions\expect('get_theme_file_path')->times(3)->andReturnUsing(function ($rel) use ($tempDir) {
+            return $tempDir . '/' . $rel;
+        });
+
+        Monkey\Functions\expect('wp_enqueue_style')->once()->with('doom-overlay', $themeUri . '/assets/doom/overlay/doom-overlay.css', [], $cssMtime);
+        Monkey\Functions\expect('wp_enqueue_script')->once()->with('doom-overlay', $themeUri . '/assets/doom/overlay/doom-overlay.js', ['jquery'], $jsMtime, true);
         Monkey\Functions\expect('wp_localize_script')->once()->with('doom-overlay', 'DOOM_OVERLAY_CFG', [
-            'engineUrl' => 'http://example.com/theme/assets/doom/engine/index.html',
-            'freedoomUrl' => 'http://example.com/theme/assets/doom/iwads/freedoom1.wad',
+            'engineUrl' => $themeUri . '/assets/doom/engine/index.html',
+            'freedoomUrl' => $themeUri . '/assets/doom/iwads/freedoom1.wad',
             'sharewareUrl' => '',
         ]);
+
         nc_enqueue_doom_overlay_assets();
         $this->addToAssertionCount(1);
 
         // cleanup
-        rmdir($tempDir . '/assets/doom/iwads');
+        unlink($tempDir . '/assets/doom/overlay/doom-overlay.css');
+        unlink($tempDir . '/assets/doom/overlay/doom-overlay.js');
+        rmdir($tempDir . '/assets/doom/overlay');
         rmdir($tempDir . '/assets/doom');
         rmdir($tempDir . '/assets');
         rmdir($tempDir);
