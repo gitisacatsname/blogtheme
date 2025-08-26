@@ -11,13 +11,6 @@
  * @since Page 1.0
  */
 
-if ( ! defined( 'NC_FREEDOOM_URL' ) ) {
-    define( 'NC_FREEDOOM_URL', 'https://raw.githubusercontent.com/freedoom/historic/trunk/0.6.4/freedoom2.wad' );
-}
-if ( ! defined( 'NC_SHAREWARE_URL' ) ) {
-    define( 'NC_SHAREWARE_URL', 'https://raw.githubusercontent.com/Akbar30Bill/DOOM_wads/master/doom1.wad' );
-}
-
 /**
  * Sets up the content width value based on the theme's design and stylesheet.
  */
@@ -798,9 +791,9 @@ function nc_enqueue_doom_overlay_assets() {
     wp_enqueue_script( 'doom-overlay', nc_theme_file_uri( $js_rel ), array( 'jquery' ), $js_ver, true );
 
     wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
-        'engineUrl'   => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
-        'freedoomUrl' => NC_FREEDOOM_URL,
-        'sharewareUrl'=> NC_SHAREWARE_URL,
+        'engineUrl'    => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
+        'gameFreedoom' => 'doom2',
+        'gameShareware'=> 'doom1',
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );

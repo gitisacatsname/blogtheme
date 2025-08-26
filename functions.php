@@ -3,15 +3,6 @@
  * Theme functions.
  */
 
-
-if ( ! defined( 'NC_FREEDOOM_URL' ) ) {
-    define( 'NC_FREEDOOM_URL', 'https://raw.githubusercontent.com/freedoom/historic/trunk/0.6.4/freedoom2.wad' );
-}
-if ( ! defined( 'NC_SHAREWARE_URL' ) ) {
-    define( 'NC_SHAREWARE_URL', 'https://raw.githubusercontent.com/Akbar30Bill/DOOM_wads/master/doom1.wad' );
-}
-
-
 // Enable categories and tags for pages.
 function nc_enable_page_taxonomies() {
     register_taxonomy_for_object_type( 'category', 'page' );
@@ -92,3 +83,50 @@ function nc_render_procrastinate_markup() {
     echo '<div id="doom-overlay"><div id="doom-container"></div><button id="close-doom">Close</button></div>';
 }
 add_action( 'wp_footer', 'nc_render_procrastinate_markup' );
+
+// Enqueue overlay assets for playing DOOM in the browser.
+if ( ! function_exists( 'nc_enqueue_doom_overlay_assets' ) ) {
+    function nc_enqueue_doom_overlay_assets() {
+        $css_rel = 'assets/doom/overlay/doom-overlay.css';
+        $css_path = nc_theme_file_path( $css_rel );
+        $css_ver = file_exists( $css_path ) ? filemtime( $css_path ) : null;
+
+        $js_rel = 'assets/doom/overlay/doom-overlay.js';
+        $js_path = nc_theme_file_path( $js_rel );
+        $js_ver = file_exists( $js_path ) ? filemtime( $js_path ) : null;
+
+        wp_enqueue_style( 'doom-overlay', nc_theme_file_uri( $css_rel ), array(), $css_ver );
+        wp_enqueue_script( 'doom-overlay', nc_theme_file_uri( $js_rel ), array( 'jquery' ), $js_ver, true );
+
+        wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
+            'engineUrl'    => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
+            'gameFreedoom' => 'doom2',
+            'gameShareware'=> 'doom1',
+        ) );
+    }
+    add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
+}
+
+// Output the DOOM overlay markup in the page footer.
+if ( ! function_exists( 'nc_render_doom_overlay' ) ) {
+    function nc_render_doom_overlay() {
+        ?>
+        <div id="doom-procrastinate">
+            <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Procrastinate <span class="doom-here">here!</span></button>
+
+            <div id="doom-frame-wrap" hidden>
+                <div class="doom-bar">
+                    <span class="doom-title">DOOM</span>
+                    <div class="doom-spacer"></div>
+                    <button class="doom-iwad doom-iwad-freedoom">Freedoom</button>
+                    <button class="doom-iwad doom-iwad-shareware">Shareware</button>
+                    <button class="doom-fullscreen">Fullscreen</button>
+                    <button class="doom-close" aria-label="Close">✕</button>
+                </div>
+                <iframe id="doom-frame" title="DOOM" allow="autoplay; fullscreen; gamepad *" loading="lazy"></iframe>
+            </div>
+        </div>
+        <?php
+    }
+    add_action( 'wp_footer', 'nc_render_doom_overlay' );
+}

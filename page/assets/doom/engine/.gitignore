@@ -1,0 +1,7 @@
+doom1.*
+doom2.*
+*.wasm
+*.data
+fonts/
+img/
+preview.gif
