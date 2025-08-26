@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: themeUrl + '/js/lotties/procrastination.json'
+    path: PROCRASTINATE_CFG.lottieUrl
   });
 
   btn.addEventListener('click', function () {
@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!window._doomLoaded) {
       window._doomLoaded = true;
       Dos(container, {
-        wdosboxUrl: themeUrl + '/js/vendor/wdosbox.js'
-      }).run(themeUrl + '/js/vendor/doom.jsdos');
+        wdosboxUrl: 'https://js-dos.com/6.22/current/wdosbox.js'
+      }).run('https://js-dos.com/6.22/current/doom.jsdos');
     }
   });
 
