@@ -32,6 +32,16 @@
 
     fullscreenButton.addEventListener('click', function () {
       Module.requestFullscreen(true, false);
+      // keep keyboard input active when toggling fullscreen
+      setTimeout(function () {
+        doomCanvas.focus();
+      }, 0);
+    });
+
+    document.addEventListener('fullscreenchange', function () {
+      if (document.fullscreenElement === doomCanvas) {
+        doomCanvas.focus();
+      }
     });
 
     return doomCanvas;
