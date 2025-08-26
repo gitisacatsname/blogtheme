@@ -4,14 +4,16 @@ set -euo pipefail
 
 # Install build dependencies when missing. These are required by
 # the webDOOM project to compile its WebAssembly binaries and mirror
-# the prerequisites from the PrBoom installation guide (SDL, SDL_mixer,
-# SDL_net).
+# the prerequisites from the PrBoom installation guide (SDL and its
+# SDL_mixer/SDL_net extensions).
 if ! command -v emcc >/dev/null 2>&1 || \
    ! command -v autoheader >/dev/null 2>&1 || \
    ! command -v aclocal >/dev/null 2>&1 || \
    ! command -v pkg-config >/dev/null 2>&1 || \
-   ! pkg-config --exists SDL_mixer >/dev/null 2>&1 || \
-   ! pkg-config --exists SDL_net >/dev/null 2>&1; then
+   ( ! pkg-config --exists SDL_mixer >/dev/null 2>&1 && \
+     ! pkg-config --exists SDL2_mixer >/dev/null 2>&1 ) || \
+   ( ! pkg-config --exists SDL_net >/dev/null 2>&1 && \
+     ! pkg-config --exists SDL2_net >/dev/null 2>&1 ); then
   echo "Installing webDOOM build dependencies..."
   if command -v apt-get >/dev/null 2>&1; then
     PKGS=(
@@ -36,9 +38,9 @@ if ! command -v emcc >/dev/null 2>&1 || \
     $SUDO apt-get install -y "${PKGS[@]}"
   elif command -v brew >/dev/null 2>&1; then
     brew update
-    brew install emscripten autoconf automake libtool pkg-config sdl sdl_mixer sdl_net
+    brew install emscripten autoconf automake libtool pkg-config sdl12-compat sdl2_mixer sdl2_net
   else
-    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config, SDL, SDL_mixer and SDL_net." >&2
+    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config, SDL, SDL_mixer (or SDL2_mixer) and SDL_net (or SDL2_net)." >&2
     exit 1
   fi
 fi
@@ -69,7 +71,11 @@ fi
 # system SDL development files. The build itself relies on Emscripten's SDL.
 if ! grep -q 'AM_PATH_SDL' "$TMP/webDOOM/acinclude.m4" 2>/dev/null; then
   cat <<'EOF' >> "$TMP/webDOOM/acinclude.m4"
-AC_DEFUN([AM_PATH_SDL], [:])
+AC_DEFUN([AM_PATH_SDL], [
+  SDL_CFLAGS=""
+  SDL_LIBS=""
+  sdl_main=yes
+])
 EOF
 fi
 
