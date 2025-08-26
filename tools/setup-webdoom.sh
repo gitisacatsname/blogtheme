@@ -42,7 +42,9 @@ TMP="$(mktemp -d)"
 git clone --depth=1 https://github.com/UstymUkhman/webDOOM "$TMP/webDOOM"
 
 # Ensure cloned shell scripts are executable
-find "$TMP/webDOOM" -type f -name '*.sh' -exec chmod +x {} +
+# Some scripts like `bootstrap` lack a .sh extension, so adjust permissions
+# on those as well to avoid "Permission denied" errors during the build.
+find "$TMP/webDOOM" -type f \( -name '*.sh' -o -name 'bootstrap' -o -name 'missing' \) -exec chmod +x {} +
 
 # Download Freedoom WADs
 curl -L https://github.com/freedoom/freedoom/releases/latest/download/freedoom-0.13.0.zip -o "$TMP/freedoom.zip"
