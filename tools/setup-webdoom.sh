@@ -120,8 +120,8 @@ pushd "$TMP/webDOOM" >/dev/null
 # recognize the wasm32-unknown-emscripten target. The versions shipped in the
 # upstream repository predate WebAssembly support, causing `configure` to abort
 # when passed the `--host=wasm32-unknown-emscripten` triple.
-curl -L https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD -o autotools/config.sub
-curl -L https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD -o autotools/config.guess
+curl -L "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" -o autotools/config.sub
+curl -L "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" -o autotools/config.guess
 chmod +x autotools/config.sub autotools/config.guess
 # Explicitly set the host triple so Autoconf treats the build as a cross
 # compilation targeting WebAssembly and skips executing test binaries, which
