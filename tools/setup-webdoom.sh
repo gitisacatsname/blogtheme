@@ -91,6 +91,13 @@ fi
 export CFLAGS="${CFLAGS:-} ${SDL_FLAGS}"
 export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
 
+# Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
+# because there are no native `libSDL_mixer` or `libSDL_net` archives to link
+# against. Pre-seed the corresponding cache variables so `configure` believes
+# the dependencies are available and defines the expected feature macros.
+export ac_cv_lib_SDL_mixer_Mix_OpenAudio=yes
+export ac_cv_lib_SDL_net_SDLNet_UDP_Bind=yes
+
 # The upstream build script links the final binary with a raw `emcc` command.
 # Inject the SDL flags so the produced WebAssembly module bundles the SDL
 # runtime and audio/network extensions.
@@ -108,7 +115,17 @@ mv "$TMP/freedoom2.wad" "$TMP/webDOOM/build/doom2.wad"
 pushd "$TMP/webDOOM" >/dev/null
 # Regenerate autotools files for the local environment
 ./bootstrap
-emconfigure ./configure
+# Explicitly set the host triple so Autoconf treats the build as a cross
+# compilation targeting WebAssembly and skips executing test binaries, which
+# would fail under Emscripten when Node.js is unavailable.
+emconfigure ./configure --host=wasm32-unknown-emscripten
+
+# `ac_cv_lib_*` cache variables above convince `configure` that SDL_mixer and
+# SDL_net are present, but the generated `config.h` still leaves their macros
+# undefined. Force-enable them so the SDL sound and networking backends are
+# compiled when using Emscripten's in-tree implementations.
+sed -i.bak 's/\/\* #undef HAVE_LIBSDL_MIXER \*\//#define HAVE_LIBSDL_MIXER 1/' config.h
+sed -i.bak 's/\/\* #undef HAVE_LIBSDL_NET \*\//#define HAVE_LIBSDL_NET 1/' config.h
 ./build.sh
 mkdir -p "$DEST"
 mv build/web/doom1.js "$DEST/freedoom1.js"
