@@ -15,6 +15,7 @@ if ! command -v emcc >/dev/null 2>&1 || \
       automake
       libtool
       pkg-config
+      libsdl1.2-dev
       curl
       git
       unzip
@@ -28,9 +29,9 @@ if ! command -v emcc >/dev/null 2>&1 || \
     $SUDO apt-get install -y "${PKGS[@]}"
   elif command -v brew >/dev/null 2>&1; then
     brew update
-    brew install emscripten autoconf automake libtool pkg-config
+    brew install emscripten autoconf automake libtool pkg-config sdl
   else
-    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool and pkg-config." >&2
+    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config and SDL." >&2
     exit 1
   fi
 fi
