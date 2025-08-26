@@ -126,7 +126,7 @@ body {
   padding: 6px 20px;
   border-radius: 0;
   color: #00CC00;
-
+  
   font-weight: 300;
   font-size: 20px;
   cursor: pointer;
@@ -140,7 +140,6 @@ body {
 
   outline: 0;
   opacity: 0;
-  display: none;
 
   bottom: 0;
   top: 0;

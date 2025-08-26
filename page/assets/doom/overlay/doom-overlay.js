@@ -22,47 +22,27 @@
     function open(game) {
       wrap.hidden = false;
       const url = setGameParam(DOOM_OVERLAY_CFG.engineUrl, game || null);
-      if (frame.src !== url) {
-        frame.src = url;
-        frame.addEventListener('load', () => {
-          frame.focus();
-          frame.contentWindow?.focus();
-        }, { once: true });
-      } else {
-        frame.focus();
-        frame.contentWindow?.focus();
-      }
+      if (frame.src !== url) frame.src = url;
     }
 
     btn.addEventListener('click', () => open(DOOM_OVERLAY_CFG.gameFreedoom));
 
     btnFreedoom.addEventListener('click', () => {
       frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gameFreedoom);
-      frame.addEventListener('load', () => {
-        frame.focus();
-        frame.contentWindow?.focus();
-      }, { once: true });
     });
 
     btnShare?.addEventListener('click', () => {
       frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gameShareware);
-      frame.addEventListener('load', () => {
-        frame.focus();
-        frame.contentWindow?.focus();
-      }, { once: true });
     });
 
-    btnFS.addEventListener('click', () => {
+    btnFS.addEventListener('click', async () => {
       wrap.classList.toggle('full');
-      try {
-        frame.contentWindow.document.getElementById('fullscreen')?.click();
-      } catch (e) {}
+      if (frame.requestFullscreen) frame.requestFullscreen().catch(() => {});
     });
 
     btnClose.addEventListener('click', () => {
       wrap.hidden = true;
       frame.src = 'about:blank';
-      btn.focus();
     });
   });
 })();
