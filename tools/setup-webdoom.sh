@@ -68,18 +68,33 @@ fi
 
 # Some environments may lack the SDL autotools macro `AM_PATH_SDL`, leading to
 # bootstrap failures. Stub the macro so Autotools can continue even without
-# system SDL development files. The build itself relies on Emscripten's SDL.
+# system SDL development files. The build itself relies on Emscripten's SDL and
+# its related mixer/net libraries, so wire those linker flags directly into the
+# macro's output to ensure the compiler and final link step pull in the bundled
+# implementations.
+SDL_FLAGS="-sUSE_SDL -sUSE_SDL_MIXER -sUSE_SDL_NET"
 if ! grep -q 'AM_PATH_SDL' "$TMP/webDOOM/acinclude.m4" 2>/dev/null; then
-  cat <<'EOF' >> "$TMP/webDOOM/acinclude.m4"
+  cat <<EOF >> "$TMP/webDOOM/acinclude.m4"
 AC_DEFUN([AM_PATH_SDL], [
-  SDL_CFLAGS=""
-  SDL_LIBS=""
+  SDL_CFLAGS="$SDL_FLAGS"
+  SDL_LIBS="$SDL_FLAGS"
   sdl_main=yes
   AC_SUBST([SDL_CFLAGS])
   AC_SUBST([SDL_LIBS])
 ])
 EOF
 fi
+
+# Propagate the same SDL flags through the rest of the build. These ensure the
+# compiler uses Emscripten's in-tree SDL port rather than searching for system
+# headers that might not exist in a clean CI environment.
+export CFLAGS="${CFLAGS:-} ${SDL_FLAGS}"
+export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
+
+# The upstream build script links the final binary with a raw `emcc` command.
+# Inject the SDL flags so the produced WebAssembly module bundles the SDL
+# runtime and audio/network extensions.
+sed -i.bak "s/emcc final.bc/emcc final.bc ${SDL_FLAGS}/" "$TMP/webDOOM/build.sh"
 
 # Download Freedoom WADs
 curl -L https://github.com/freedoom/freedoom/releases/latest/download/freedoom-0.13.0.zip -o "$TMP/freedoom.zip"
