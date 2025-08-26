@@ -4,7 +4,9 @@ set -euo pipefail
 
 # Install build dependencies when missing. These are required by
 # the webDOOM project to compile its WebAssembly binaries.
-if ! command -v emcc >/dev/null 2>&1 || ! command -v autoheader >/dev/null 2>&1; then
+if ! command -v emcc >/dev/null 2>&1 || \
+   ! command -v autoheader >/dev/null 2>&1 || \
+   ! command -v aclocal >/dev/null 2>&1; then
   echo "Installing webDOOM build dependencies..."
   if command -v apt-get >/dev/null 2>&1; then
     PKGS=(
@@ -52,6 +54,9 @@ mv "$TMP/freedoom2.wad" "$TMP/webDOOM/build/doom2.wad"
 
 # Build Freedoom phase 1
 pushd "$TMP/webDOOM" >/dev/null
+# Regenerate autotools files for the local environment
+./bootstrap
+emconfigure ./configure
 ./build.sh
 mkdir -p "$DEST"
 mv build/web/doom1.js "$DEST/freedoom1.js"
