@@ -8,6 +8,9 @@ TMP="$(mktemp -d)"
 # Clone webDOOM source
 git clone --depth=1 https://github.com/UstymUkhman/webDOOM "$TMP/webDOOM"
 
+# Ensure cloned shell scripts are executable
+find "$TMP/webDOOM" -type f -name '*.sh' -exec chmod +x {} +
+
 # Download Freedoom WADs
 curl -L https://github.com/freedoom/freedoom/releases/latest/download/freedoom-0.13.0.zip -o "$TMP/freedoom.zip"
 unzip -j "$TMP/freedoom.zip" freedoom-0.13.0/freedoom1.wad freedoom-0.13.0/freedoom2.wad -d "$TMP"
