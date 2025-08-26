@@ -3,12 +3,6 @@
  * Theme functions.
  */
 
-if ( ! defined( 'NC_FREEDOOM_URL' ) ) {
-    define( 'NC_FREEDOOM_URL', 'https://github.com/freedoom/historic/raw/refs/heads/trunk/0.6.4/freedoom2.wad' );
-}
-if ( ! defined( 'NC_SHAREWARE_URL' ) ) {
-    define( 'NC_SHAREWARE_URL', 'https://github.com/Akbar30Bill/DOOM_wads/raw/refs/heads/master/doom1.wad' );
-}
 
 // Enable categories and tags for pages.
 function nc_enable_page_taxonomies() {
@@ -64,45 +58,29 @@ function nc_theme_file_path( $file ) {
     return get_theme_file_path( nc_normalize_theme_file( $file ) );
 }
 
-// Enqueue overlay assets for playing DOOM in the browser.
-function nc_enqueue_doom_overlay_assets() {
-    $css_rel = 'assets/doom/overlay/doom-overlay.css';
+// Enqueue assets and output markup for the procrastinate button and Doom overlay.
+function nc_enqueue_procrastinate_assets() {
+    $css_rel = 'css/procrastinate.css';
     $css_path = nc_theme_file_path( $css_rel );
     $css_ver = file_exists( $css_path ) ? filemtime( $css_path ) : null;
 
-    $js_rel = 'assets/doom/overlay/doom-overlay.js';
+    $js_rel = 'js/procrastinate.js';
     $js_path = nc_theme_file_path( $js_rel );
     $js_ver = file_exists( $js_path ) ? filemtime( $js_path ) : null;
 
-    wp_enqueue_style( 'doom-overlay', nc_theme_file_uri( $css_rel ), array(), $css_ver );
-    wp_enqueue_script( 'doom-overlay', nc_theme_file_uri( $js_rel ), array( 'jquery' ), $js_ver, true );
+    wp_enqueue_style( 'procrastinate', nc_theme_file_uri( $css_rel ), array(), $css_ver );
+    wp_enqueue_script( 'lottie', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.6/lottie.min.js', array(), null, true );
+    wp_enqueue_script( 'js-dos', 'https://js-dos.com/6.22/current/js-dos.js', array(), null, true );
+    wp_enqueue_script( 'procrastinate', nc_theme_file_uri( $js_rel ), array( 'lottie', 'js-dos' ), $js_ver, true );
 
-    wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
-        'engineUrl'   => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
-        'freedoomUrl' => NC_FREEDOOM_URL,
-        'sharewareUrl'=> NC_SHAREWARE_URL,
+    wp_localize_script( 'procrastinate', 'PROCRASTINATE_CFG', array(
+        'lottieUrl' => nc_theme_file_uri( 'js/lotties/procrastination.json' ),
     ) );
 }
-add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
+add_action( 'wp_enqueue_scripts', 'nc_enqueue_procrastinate_assets' );
 
-// Output the DOOM overlay markup in the page footer.
-function nc_render_doom_overlay() {
-    ?>
-    <div id="doom-procrastinate">
-        <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Procrastinate <span class="doom-here">here!</span></button>
-
-        <div id="doom-frame-wrap" hidden>
-            <div class="doom-bar">
-                <span class="doom-title">DOOM</span>
-                <div class="doom-spacer"></div>
-                <button class="doom-iwad doom-iwad-freedoom">Freedoom</button>
-                <button class="doom-iwad doom-iwad-shareware">Shareware</button>
-                <button class="doom-fullscreen">Fullscreen</button>
-                <button class="doom-close" aria-label="Close">✕</button>
-            </div>
-            <iframe id="doom-frame" title="DOOM" allow="autoplay; fullscreen; gamepad *" loading="lazy"></iframe>
-        </div>
-    </div>
-    <?php
+function nc_render_procrastinate_markup() {
+    echo '<div id="procrastinate-btn"></div>';
+    echo '<div id="doom-overlay"><div id="doom-container"></div><button id="close-doom">Close</button></div>';
 }
-add_action( 'wp_footer', 'nc_render_doom_overlay' );
+add_action( 'wp_footer', 'nc_render_procrastinate_markup' );
