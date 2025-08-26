@@ -4,6 +4,14 @@
  */
 
 
+if ( ! defined( 'NC_FREEDOOM_URL' ) ) {
+    define( 'NC_FREEDOOM_URL', 'https://raw.githubusercontent.com/freedoom/historic/trunk/0.6.4/freedoom2.wad' );
+}
+if ( ! defined( 'NC_SHAREWARE_URL' ) ) {
+    define( 'NC_SHAREWARE_URL', 'https://raw.githubusercontent.com/Akbar30Bill/DOOM_wads/master/doom1.wad' );
+}
+
+
 // Enable categories and tags for pages.
 function nc_enable_page_taxonomies() {
     register_taxonomy_for_object_type( 'category', 'page' );
