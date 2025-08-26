@@ -72,7 +72,10 @@ fi
 # its related mixer/net libraries, so wire those linker flags directly into the
 # macro's output to ensure the compiler and final link step pull in the bundled
 # implementations.
-SDL_FLAGS="-sUSE_SDL -sUSE_SDL_MIXER -sUSE_SDL_NET"
+# Use SDL2 ports from Emscripten.  The SDL_net and SDL_mixer ports only
+# ship headers under the SDL2/ prefix, so opt in to the SDL2 variants to
+# ensure the corresponding headers and libraries are available.
+SDL_FLAGS="-sUSE_SDL=2 -sUSE_SDL_MIXER=2 -sUSE_SDL_NET=2"
 if ! grep -q 'AM_PATH_SDL' "$TMP/webDOOM/acinclude.m4" 2>/dev/null; then
   cat <<EOF >> "$TMP/webDOOM/acinclude.m4"
 AC_DEFUN([AM_PATH_SDL], [
@@ -90,6 +93,13 @@ fi
 # headers that might not exist in a clean CI environment.
 export CFLAGS="${CFLAGS:-} ${SDL_FLAGS}"
 export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
+
+# Emscripten's SDL_net headers live under the SDL2/ directory. The PrBoom
+# sources include "SDL_net.h" directly, which fails to resolve when using
+# the SDL2-based ports. Rewrite those includes so the build can locate the
+# header on all platforms.
+find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) -print0 \
+  | xargs -0 sed -i.bak 's|"SDL_net.h"|<SDL2/SDL_net.h>|g'
 
 # Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
 # because there are no native `libSDL_mixer` or `libSDL_net` archives to link
