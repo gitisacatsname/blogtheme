@@ -54,7 +54,9 @@ git clone --depth=1 https://github.com/UstymUkhman/webDOOM "$TMP/webDOOM"
 # Ensure cloned shell scripts are executable
 # Some scripts like `bootstrap` lack a .sh extension, so adjust permissions
 # on those as well to avoid "Permission denied" errors during the build.
-find "$TMP/webDOOM" -type f \( -name '*.sh' -o -name 'bootstrap' -o -name 'missing' \) -exec chmod +x {} +
+# Use `find` with `-print0` and `xargs` for portability across BSD and GNU
+# variants, including macOS.
+find "$TMP/webDOOM" -type f \( -name '*.sh' -o -name 'bootstrap' -o -name 'missing' \) -print0 | xargs -0 chmod +x
 
 # The upstream repository ships a pre-generated `prboom.spec` but not the
 # template file `prboom.spec.in` expected by Autotools. When `bootstrap`
@@ -97,9 +99,11 @@ export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
 # Emscripten's SDL_net headers live under the SDL2/ directory. The PrBoom
 # sources include "SDL_net.h" directly, which fails to resolve when using
 # the SDL2-based ports. Rewrite those includes so the build can locate the
-# header on all platforms.
-find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) \
-  -exec LC_ALL=C sed -i.bak 's|"SDL_net.h"|<SDL2/SDL_net.h>|g' {} +
+# header on all platforms. BSD `find` (e.g. on macOS) does not support setting
+# environment variables directly in `-exec`, so pipe the file list through
+# `xargs` and run `sed` with the desired locale.
+find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) -print0 |
+  xargs -0 -I{} sh -c 'LC_ALL=C sed -i.bak "s|\"SDL_net.h\"|<SDL2/SDL_net.h>|g" "$1"' _ {}
 
 # Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
 # because there are no native `libSDL_mixer` or `libSDL_net` archives to link
