@@ -115,6 +115,14 @@ mv "$TMP/freedoom2.wad" "$TMP/webDOOM/build/doom2.wad"
 pushd "$TMP/webDOOM" >/dev/null
 # Regenerate autotools files for the local environment
 ./bootstrap
+
+# Replace outdated config.guess and config.sub with modern versions that
+# recognize the wasm32-unknown-emscripten target. The versions shipped in the
+# upstream repository predate WebAssembly support, causing `configure` to abort
+# when passed the `--host=wasm32-unknown-emscripten` triple.
+curl -L https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD -o autotools/config.sub
+curl -L https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD -o autotools/config.guess
+chmod +x autotools/config.sub autotools/config.guess
 # Explicitly set the host triple so Autoconf treats the build as a cross
 # compilation targeting WebAssembly and skips executing test binaries, which
 # would fail under Emscripten when Node.js is unavailable.
