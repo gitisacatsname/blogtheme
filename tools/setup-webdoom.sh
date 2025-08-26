@@ -2,6 +2,37 @@
 # Build Freedoom WebAssembly engine assets without committing binaries.
 set -euo pipefail
 
+# Install build dependencies when missing. These are required by
+# the webDOOM project to compile its WebAssembly binaries.
+if ! command -v emcc >/dev/null 2>&1 || ! command -v autoheader >/dev/null 2>&1; then
+  echo "Installing webDOOM build dependencies..."
+  if command -v apt-get >/dev/null 2>&1; then
+    PKGS=(
+      build-essential
+      autoconf
+      automake
+      libtool
+      pkg-config
+      curl
+      git
+      unzip
+      emscripten
+    )
+    SUDO=""
+    if command -v sudo >/dev/null 2>&1; then
+      SUDO="sudo"
+    fi
+    $SUDO apt-get update
+    $SUDO apt-get install -y "${PKGS[@]}"
+  elif command -v brew >/dev/null 2>&1; then
+    brew update
+    brew install emscripten autoconf automake libtool pkg-config
+  else
+    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool and pkg-config." >&2
+    exit 1
+  fi
+fi
+
 DEST="$(dirname "$0")/../page/assets/doom/engine"
 TMP="$(mktemp -d)"
 
