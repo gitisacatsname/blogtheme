@@ -16,8 +16,8 @@
     const frame = qs('#doom-frame', root);
     const btnFS = qs('.doom-fullscreen', root);
     const btnClose = qs('.doom-close', root);
-    const btnFreedoom = qs('.doom-iwad-freedoom', root);
-    const btnShare = qs('.doom-iwad-shareware', root);
+    const btnPhase1 = qs('.doom-iwad-phase1', root);
+    const btnPhase2 = qs('.doom-iwad-phase2', root);
 
     let lastFocus = null;
 
@@ -52,15 +52,15 @@
       frame.focus();
     }
 
-    btn.addEventListener('click', () => open(DOOM_OVERLAY_CFG.gameFreedoom));
+    btn.addEventListener('click', () => open(DOOM_OVERLAY_CFG.gamePhase2));
 
-    btnFreedoom.addEventListener('click', () => {
-      frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gameFreedoom);
+    btnPhase1.addEventListener('click', () => {
+      frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gamePhase1);
       frame.focus();
     });
 
-    btnShare?.addEventListener('click', () => {
-      frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gameShareware);
+    btnPhase2.addEventListener('click', () => {
+      frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gamePhase2);
       frame.focus();
     });
 
