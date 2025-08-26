@@ -6,10 +6,13 @@
       const u = new URL(url, window.location.origin);
       if (iwadUrl) u.searchParams.set('iwad', iwadUrl);
       return u.toString();
-    } catch { return url; }
+    } catch {
+      return url;
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('[DoomOverlay] DOMContentLoaded');
     const root  = qs('#doom-procrastinate');
     const btn   = qs('.doom-open', root);
     const wrap  = qs('#doom-frame-wrap', root);
@@ -20,31 +23,53 @@
     const btnShare = qs('.doom-iwad-shareware', root);
 
     [DOOM_OVERLAY_CFG.freedoomUrl, DOOM_OVERLAY_CFG.sharewareUrl].forEach(u => {
-      if (u) fetch(u, {mode: 'no-cors'}).catch(() => {});
+      if (!u) return;
+      console.log('[DoomOverlay] Prefetching WAD', u);
+      fetch(u, { mode: 'no-cors' })
+        .then(res => console.log('[DoomOverlay] Prefetch response type', res.type))
+        .catch(err => console.error('[DoomOverlay] Prefetch failed', err));
     });
 
     function open(iwadUrl) {
+      console.log('[DoomOverlay] Opening overlay with', iwadUrl);
       wrap.hidden = false;
       const url = setIWADParam(DOOM_OVERLAY_CFG.engineUrl, iwadUrl || null);
       if (frame.src !== url) frame.src = url;
     }
 
-    btn.addEventListener('click', () => open(DOOM_OVERLAY_CFG.freedoomUrl));
+    frame.addEventListener('load', () => {
+      console.log('[DoomOverlay] Frame loaded', frame.src);
+    });
+
+    btn.addEventListener('click', () => {
+      console.log('[DoomOverlay] Procrastinate button clicked');
+      open(DOOM_OVERLAY_CFG.freedoomUrl);
+    });
 
     btnFreedoom.addEventListener('click', () => {
-      frame.src = setIWADParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.freedoomUrl);
+      console.log('[DoomOverlay] Freedoom WAD selected');
+      frame.src = setIWADParam(
+        DOOM_OVERLAY_CFG.engineUrl,
+        DOOM_OVERLAY_CFG.freedoomUrl
+      );
     });
 
     btnShare?.addEventListener('click', () => {
-      frame.src = setIWADParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.sharewareUrl);
+      console.log('[DoomOverlay] Shareware WAD selected');
+      frame.src = setIWADParam(
+        DOOM_OVERLAY_CFG.engineUrl,
+        DOOM_OVERLAY_CFG.sharewareUrl
+      );
     });
 
     btnFS.addEventListener('click', async () => {
+      console.log('[DoomOverlay] Fullscreen toggled');
       wrap.classList.toggle('full');
       if (frame.requestFullscreen) frame.requestFullscreen().catch(() => {});
     });
 
     btnClose.addEventListener('click', () => {
+      console.log('[DoomOverlay] Overlay closed');
       wrap.hidden = true;
       frame.src = 'about:blank';
     });
