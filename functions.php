@@ -57,33 +57,6 @@ function nc_theme_file_path( $file ) {
     return get_theme_file_path( nc_normalize_theme_file( $file ) );
 }
 
-// Enqueue assets and output markup for the procrastinate button and Doom overlay.
-function nc_enqueue_procrastinate_assets() {
-    $css_rel = 'css/procrastinate.css';
-    $css_path = nc_theme_file_path( $css_rel );
-    $css_ver = file_exists( $css_path ) ? filemtime( $css_path ) : null;
-
-    $js_rel = 'js/procrastinate.js';
-    $js_path = nc_theme_file_path( $js_rel );
-    $js_ver = file_exists( $js_path ) ? filemtime( $js_path ) : null;
-
-    wp_enqueue_style( 'procrastinate', nc_theme_file_uri( $css_rel ), array(), $css_ver );
-    wp_enqueue_script( 'lottie', 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.6/lottie.min.js', array(), null, true );
-    wp_enqueue_script( 'js-dos', 'https://js-dos.com/6.22/current/js-dos.js', array(), null, true );
-    wp_enqueue_script( 'procrastinate', nc_theme_file_uri( $js_rel ), array( 'lottie', 'js-dos' ), $js_ver, true );
-
-    wp_localize_script( 'procrastinate', 'PROCRASTINATE_CFG', array(
-        'lottieUrl' => nc_theme_file_uri( 'js/lotties/procrastination.json' ),
-    ) );
-}
-add_action( 'wp_enqueue_scripts', 'nc_enqueue_procrastinate_assets' );
-
-function nc_render_procrastinate_markup() {
-    echo '<div id="procrastinate-btn"></div>';
-    echo '<div id="doom-overlay"><div id="doom-container"></div><button id="close-doom">Close</button></div>';
-}
-add_action( 'wp_footer', 'nc_render_procrastinate_markup' );
-
 // Enqueue overlay assets for playing DOOM in the browser.
 if ( ! function_exists( 'nc_enqueue_doom_overlay_assets' ) ) {
     function nc_enqueue_doom_overlay_assets() {
@@ -99,9 +72,9 @@ if ( ! function_exists( 'nc_enqueue_doom_overlay_assets' ) ) {
         wp_enqueue_script( 'doom-overlay', nc_theme_file_uri( $js_rel ), array( 'jquery' ), $js_ver, true );
 
         wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
-            'engineUrl'    => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
-            'gameFreedoom' => 'doom2',
-            'gameShareware'=> 'doom1',
+            'engineUrl' => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
+            'gamePhase1' => 'freedoom1',
+            'gamePhase2' => 'freedoom2',
         ) );
     }
     add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
@@ -118,8 +91,8 @@ if ( ! function_exists( 'nc_render_doom_overlay' ) ) {
                 <div class="doom-bar">
                     <span class="doom-title">DOOM</span>
                     <div class="doom-spacer"></div>
-                    <button class="doom-iwad doom-iwad-freedoom">Freedoom</button>
-                    <button class="doom-iwad doom-iwad-shareware">Shareware</button>
+                    <button class="doom-iwad doom-iwad-phase1">Freedoom Phase 1</button>
+                    <button class="doom-iwad doom-iwad-phase2">Freedoom Phase 2</button>
                     <button class="doom-fullscreen">Fullscreen</button>
                     <button class="doom-close" aria-label="Close">✕</button>
                 </div>

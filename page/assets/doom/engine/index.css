@@ -183,11 +183,11 @@ body {
 }
 
 #preview .doom.one {
-  background-image: url('img/doom1.jpg');
+  background-image: url('img/freedoom1.jpg');
   left: 0;
 }
 
 #preview .doom.two {
-  background-image: url('img/doom2.jpg');
+  background-image: url('img/freedoom2.jpg');
   right: 0;
 }

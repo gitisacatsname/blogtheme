@@ -87,8 +87,8 @@
     document.addEventListener('mozpointerlockchange', onPointerLockChange, false);
     document.addEventListener('pointerlockchange', onPointerLockChange, false);
 
-    games[0].addEventListener('click', onGameClick.bind(null, 'doom1'));
-    games[1].addEventListener('click', onGameClick.bind(null, 'doom2'));
+    games[0].addEventListener('click', onGameClick.bind(null, 'freedoom1'));
+    games[1].addEventListener('click', onGameClick.bind(null, 'freedoom2'));
     
     fullscreenButton = document.getElementById('fullscreen');
     Module.progress = document.getElementById('progress');
@@ -100,7 +100,7 @@
 
     var params = new URLSearchParams(window.location.search);
     var autoGame = params.get('game');
-    if (autoGame === 'doom1' || autoGame === 'doom2') {
+    if (autoGame === 'freedoom1' || autoGame === 'freedoom2') {
       onGameClick(autoGame);
     }
   });

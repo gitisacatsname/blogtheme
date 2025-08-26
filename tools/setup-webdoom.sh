@@ -1,29 +1,47 @@
 #!/usr/bin/env bash
-# Download webDOOM engine assets without committing binaries.
+# Build Freedoom WebAssembly engine assets without committing binaries.
 set -euo pipefail
 
 DEST="$(dirname "$0")/../page/assets/doom/engine"
-BASE_URL="https://raw.githubusercontent.com/UstymUkhman/webDOOM/master/public"
-FILES=(
-  doom1.js
-  doom1.wasm
-  doom1.data
-  doom2.js
-  doom2.wasm
-  doom2.data
-  fonts/White-Rabbit.eot
-  fonts/White-Rabbit.woff
-  fonts/White-Rabbit.ttf
-  fonts/White-Rabbit.svg
-  img/doom1.jpg
-  img/doom2.jpg
-  preview.gif
-)
+TMP="$(mktemp -d)"
 
+# Clone webDOOM source
+git clone --depth=1 https://github.com/UstymUkhman/webDOOM "$TMP/webDOOM"
+
+# Download Freedoom WADs
+curl -L https://github.com/freedoom/freedoom/releases/latest/download/freedoom-0.13.0.zip -o "$TMP/freedoom.zip"
+unzip -j "$TMP/freedoom.zip" freedoom-0.13.0/freedoom1.wad freedoom-0.13.0/freedoom2.wad -d "$TMP"
+
+# Prepare build directory with Freedoom assets
+mv "$TMP/freedoom1.wad" "$TMP/webDOOM/build/doom1.wad"
+mv "$TMP/freedoom2.wad" "$TMP/webDOOM/build/doom2.wad"
+
+# Build Freedoom phase 1
+pushd "$TMP/webDOOM" >/dev/null
+./build.sh
 mkdir -p "$DEST"
-for f in "${FILES[@]}"; do
-  mkdir -p "$DEST/$(dirname "$f")"
-  curl -L "$BASE_URL/$f" -o "$DEST/$f"
-done
+mv build/web/doom1.js "$DEST/freedoom1.js"
+mv build/web/doom1.wasm "$DEST/freedoom1.wasm"
+mv build/web/doom1.data "$DEST/freedoom1.data"
 
-echo "webDOOM engine assets downloaded to $DEST"
+# Build Freedoom phase 2
+./build.sh doom2
+mv build/web/doom2.js "$DEST/freedoom2.js"
+mv build/web/doom2.wasm "$DEST/freedoom2.wasm"
+mv build/web/doom2.data "$DEST/freedoom2.data"
+
+# Fonts and preview assets
+mkdir -p "$DEST/fonts" "$DEST/img"
+cp public/fonts/White-Rabbit.eot "$DEST/fonts/White-Rabbit.eot"
+cp public/fonts/White-Rabbit.woff "$DEST/fonts/White-Rabbit.woff"
+cp public/fonts/White-Rabbit.ttf "$DEST/fonts/White-Rabbit.ttf"
+cp public/fonts/White-Rabbit.svg "$DEST/fonts/White-Rabbit.svg"
+
+curl -L https://freedoom.github.io/img/screenshots/tn_p1_3.jpg -o "$DEST/img/freedoom1.jpg"
+curl -L https://freedoom.github.io/img/screenshots/tn_p2_3.jpg -o "$DEST/img/freedoom2.jpg"
+cp public/preview.gif "$DEST/preview.gif"
+
+popd >/dev/null
+rm -rf "$TMP"
+
+echo "Freedoom engine assets downloaded to $DEST"
