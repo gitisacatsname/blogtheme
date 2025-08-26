@@ -75,6 +75,8 @@ AC_DEFUN([AM_PATH_SDL], [
   SDL_CFLAGS=""
   SDL_LIBS=""
   sdl_main=yes
+  AC_SUBST([SDL_CFLAGS])
+  AC_SUBST([SDL_LIBS])
 ])
 EOF
 fi
