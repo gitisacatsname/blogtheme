@@ -3,10 +3,15 @@
 set -euo pipefail
 
 # Install build dependencies when missing. These are required by
-# the webDOOM project to compile its WebAssembly binaries.
+# the webDOOM project to compile its WebAssembly binaries and mirror
+# the prerequisites from the PrBoom installation guide (SDL, SDL_mixer,
+# SDL_net).
 if ! command -v emcc >/dev/null 2>&1 || \
    ! command -v autoheader >/dev/null 2>&1 || \
-   ! command -v aclocal >/dev/null 2>&1; then
+   ! command -v aclocal >/dev/null 2>&1 || \
+   ! command -v pkg-config >/dev/null 2>&1 || \
+   ! pkg-config --exists SDL_mixer >/dev/null 2>&1 || \
+   ! pkg-config --exists SDL_net >/dev/null 2>&1; then
   echo "Installing webDOOM build dependencies..."
   if command -v apt-get >/dev/null 2>&1; then
     PKGS=(
@@ -16,6 +21,8 @@ if ! command -v emcc >/dev/null 2>&1 || \
       libtool
       pkg-config
       libsdl1.2-dev
+      libsdl-mixer1.2-dev
+      libsdl-net1.2-dev
       curl
       git
       unzip
@@ -29,9 +36,9 @@ if ! command -v emcc >/dev/null 2>&1 || \
     $SUDO apt-get install -y "${PKGS[@]}"
   elif command -v brew >/dev/null 2>&1; then
     brew update
-    brew install emscripten autoconf automake libtool pkg-config sdl
+    brew install emscripten autoconf automake libtool pkg-config sdl sdl_mixer sdl_net
   else
-    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config and SDL." >&2
+    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config, SDL, SDL_mixer and SDL_net." >&2
     exit 1
   fi
 fi
