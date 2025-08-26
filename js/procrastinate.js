@@ -12,16 +12,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btn.addEventListener('click', function () {
     var overlay = document.getElementById('doom-overlay');
+    var container = document.getElementById('doom-container');
+    if (!overlay || !container) return;
     overlay.style.display = 'flex';
     if (!window._doomLoaded) {
       window._doomLoaded = true;
-      Dos(document.getElementById('doom-container'), {
+      Dos(container, {
         wdosboxUrl: themeUrl + '/js/vendor/wdosbox.js'
       }).run(themeUrl + '/js/vendor/doom.jsdos');
     }
   });
 
-  document.getElementById('close-doom').addEventListener('click', function () {
-    document.getElementById('doom-overlay').style.display = 'none';
-  });
+  var closeBtn = document.getElementById('close-doom');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      var overlay = document.getElementById('doom-overlay');
+      if (overlay) overlay.style.display = 'none';
+    });
+  }
 });
