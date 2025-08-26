@@ -21,6 +21,12 @@
 
     let lastFocus = null;
 
+    function focusFrame() {
+      const doc = frame.contentDocument;
+      doc?.getElementById('doom')?.focus();
+      frame.contentWindow?.focus();
+    }
+
     function fixFrame() {
       const doc = frame.contentDocument;
       if (!doc) return;
@@ -32,9 +38,9 @@
         canvas.style.right = '0';
         canvas.style.width = '100%';
         canvas.style.height = '100%';
-        canvas.focus();
       }
-      frame.contentWindow?.focus();
+      doc.addEventListener('fullscreenchange', focusFrame);
+      focusFrame();
     }
     frame.addEventListener('load', fixFrame);
 
@@ -61,6 +67,7 @@
     btnFS.addEventListener('click', () => {
       const fs = frame.contentDocument?.getElementById('fullscreen');
       fs?.click();
+      focusFrame();
     });
 
     btnClose.addEventListener('click', () => {
