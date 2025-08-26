@@ -76,6 +76,11 @@ class DoomOverlayTest extends TestCase {
         $this->assertSame('/path/theme/page/css/procrastinate.css', $path2);
     }
 
+    public function test_wad_urls_use_raw_github() {
+        $this->assertSame('raw.githubusercontent.com', parse_url(NC_FREEDOOM_URL, PHP_URL_HOST));
+        $this->assertSame('raw.githubusercontent.com', parse_url(NC_SHAREWARE_URL, PHP_URL_HOST));
+    }
+
     public function test_download_shareware_wad_extracts_file() {
         $tempDir = sys_get_temp_dir() . '/wadtest_' . uniqid();
         mkdir($tempDir);
