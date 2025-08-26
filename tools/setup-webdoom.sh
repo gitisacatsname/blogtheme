@@ -46,6 +46,25 @@ git clone --depth=1 https://github.com/UstymUkhman/webDOOM "$TMP/webDOOM"
 # on those as well to avoid "Permission denied" errors during the build.
 find "$TMP/webDOOM" -type f \( -name '*.sh' -o -name 'bootstrap' -o -name 'missing' \) -exec chmod +x {} +
 
+# The upstream repository ships a pre-generated `prboom.spec` but not the
+# template file `prboom.spec.in` expected by Autotools. When `bootstrap`
+# regenerates the build system, `configure.ac` references `prboom.spec`,
+# causing the process to abort if the `.in` file is missing. Provide the
+# expected template by copying the existing spec file when necessary so the
+# configure step can proceed.
+if [ -f "$TMP/webDOOM/prboom.spec" ] && [ ! -f "$TMP/webDOOM/prboom.spec.in" ]; then
+  cp "$TMP/webDOOM/prboom.spec" "$TMP/webDOOM/prboom.spec.in"
+fi
+
+# Some environments may lack the SDL autotools macro `AM_PATH_SDL`, leading to
+# bootstrap failures. Stub the macro so Autotools can continue even without
+# system SDL development files. The build itself relies on Emscripten's SDL.
+if ! grep -q 'AM_PATH_SDL' "$TMP/webDOOM/acinclude.m4" 2>/dev/null; then
+  cat <<'EOF' >> "$TMP/webDOOM/acinclude.m4"
+AC_DEFUN([AM_PATH_SDL], [:])
+EOF
+fi
+
 # Download Freedoom WADs
 curl -L https://github.com/freedoom/freedoom/releases/latest/download/freedoom-0.13.0.zip -o "$TMP/freedoom.zip"
 unzip -j "$TMP/freedoom.zip" freedoom-0.13.0/freedoom1.wad freedoom-0.13.0/freedoom2.wad -d "$TMP"
