@@ -98,8 +98,8 @@ export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
 # sources include "SDL_net.h" directly, which fails to resolve when using
 # the SDL2-based ports. Rewrite those includes so the build can locate the
 # header on all platforms.
-find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) -print0 \
-  | xargs -0 sed -i.bak 's|"SDL_net.h"|<SDL2/SDL_net.h>|g'
+find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) \
+  -exec LC_ALL=C sed -i.bak 's|"SDL_net.h"|<SDL2/SDL_net.h>|g' {} +
 
 # Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
 # because there are no native `libSDL_mixer` or `libSDL_net` archives to link
