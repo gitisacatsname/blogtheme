@@ -92,6 +92,11 @@ if ( ! function_exists( 'nc_render_doom_overlay' ) ) {
             <div id="doom-frame-wrap" hidden>
                 <div class="doom-bar">
                     <span class="doom-title">DOOM</span>
+                    <select class="doom-iwad" aria-label="Select game">
+                        <option value="doom1">Doom Shareware</option>
+                        <option value="freedoom1">Freedoom 1</option>
+                        <option value="freedoom2">Freedoom 2</option>
+                    </select>
                     <div class="doom-spacer"></div>
                     <button class="doom-fullscreen">Fullscreen</button>
                     <button class="doom-close" aria-label="Close">✕</button>

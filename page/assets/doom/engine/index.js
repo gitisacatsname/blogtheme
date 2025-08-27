@@ -100,7 +100,7 @@
 
     var params = new URLSearchParams(window.location.search);
     var autoGame = params.get('game');
-    if (autoGame === 'freedoom1' || autoGame === 'freedoom2') {
+    if (autoGame === 'doom1' || autoGame === 'freedoom1' || autoGame === 'freedoom2') {
       onGameClick(autoGame);
     }
   });
