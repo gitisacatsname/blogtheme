@@ -8,6 +8,7 @@
     const frame = qs('#doom-frame', root);
     const btnFS = qs('.doom-fullscreen', root);
     const btnClose = qs('.doom-close', root);
+    const selIwad = qs('.doom-iwad', root);
 
     let lastFocus = null;
 
@@ -25,16 +26,22 @@
     function open() {
       lastFocus = document.activeElement;
       wrap.hidden = false;
-      const url = DOOM_OVERLAY_CFG.engineUrl;
-      if (frame.src !== url) frame.src = url;
+      const game = encodeURIComponent(selIwad.value);
+      const url = DOOM_OVERLAY_CFG.engineUrl + '?game=' + game;
+      frame.src = url;
       frame.focus();
     }
 
     btn.addEventListener('click', open);
 
     btnFS.addEventListener('click', () => {
-      const fs = frame.contentDocument?.getElementById('fullscreen');
-      fs?.click();
+      const mod = frame.contentWindow?.Module;
+      if (typeof mod?.requestFullscreen === 'function') {
+        mod.requestFullscreen(true, false);
+      } else {
+        const fs = frame.contentDocument?.getElementById('fullscreen');
+        fs?.click();
+      }
       focusFrame();
     });
 
