@@ -1,0 +1,55 @@
+Page WordPress Theme License Information
+===========================================
+
+# Page Theme, Copyright (C) 2013
+
+- License: GNU General Public License, v2 (or newer)
+- License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+
+## Components
+
+### normalize.css v2.1.0
+
+- Source : http://git.io/normalize
+- LIcense: MIT License
+
+
+### HTML5 Shiv v3.6
+
+- Source : https://github.com/aFarkas/html5shiv
+- LIcense: MIT/GPL2 Licensed
+
+
+### Pageslide
+
+- Source: http://srobbin.com/jquery-pageslide/
+- LIcense: Dual licensed under the MIT and GPL licenses
+- License URI: http://www.opensource.org/licenses/mit-license.php
+
+
+### Vollkorn font
+
+- Source: http://friedrichalthausen.de/?page_id=411
+- License: SIL Open Font License 1.1
+- License URI: http://scripts.sil.org/OFL
+
+
+### Socicon Font
+
+The Socicon Font.
+
+- Source: http://socicon.com/
+- License: SIL Open Font License 1.1
+- License URI: http://scripts.sil.org/OFL
+
