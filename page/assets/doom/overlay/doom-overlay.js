@@ -1,14 +1,6 @@
 (function () {
   const qs = (s, r = document) => r.querySelector(s);
 
-  function setGameParam(url, game) {
-    try {
-      const u = new URL(url, window.location.origin);
-      if (game) u.searchParams.set('game', game);
-      return u.toString();
-    } catch { return url; }
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     const root  = qs('#doom-procrastinate');
     const btn   = qs('.doom-open', root);
@@ -16,8 +8,6 @@
     const frame = qs('#doom-frame', root);
     const btnFS = qs('.doom-fullscreen', root);
     const btnClose = qs('.doom-close', root);
-    const btnPhase1 = qs('.doom-iwad-phase1', root);
-    const btnPhase2 = qs('.doom-iwad-phase2', root);
 
     let lastFocus = null;
 
@@ -28,41 +18,19 @@
     }
 
     function fixFrame() {
-      const doc = frame.contentDocument;
-      if (!doc) return;
-      doc.getElementById('fullscreen')?.style.setProperty('display', 'none');
-      doc.getElementById('preview')?.style.setProperty('display', 'none');
-      const canvas = doc.getElementById('doom');
-      if (canvas) {
-        canvas.style.left = '0';
-        canvas.style.right = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-      }
-      doc.addEventListener('fullscreenchange', focusFrame);
       focusFrame();
     }
     frame.addEventListener('load', fixFrame);
 
-    function open(game) {
+    function open() {
       lastFocus = document.activeElement;
       wrap.hidden = false;
-      const url = setGameParam(DOOM_OVERLAY_CFG.engineUrl, game || null);
+      const url = DOOM_OVERLAY_CFG.engineUrl;
       if (frame.src !== url) frame.src = url;
       frame.focus();
     }
 
-    btn.addEventListener('click', () => open(DOOM_OVERLAY_CFG.gamePhase2));
-
-    btnPhase1.addEventListener('click', () => {
-      frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gamePhase1);
-      frame.focus();
-    });
-
-    btnPhase2.addEventListener('click', () => {
-      frame.src = setGameParam(DOOM_OVERLAY_CFG.engineUrl, DOOM_OVERLAY_CFG.gamePhase2);
-      frame.focus();
-    });
+    btn.addEventListener('click', open);
 
     btnFS.addEventListener('click', () => {
       const fs = frame.contentDocument?.getElementById('fullscreen');
