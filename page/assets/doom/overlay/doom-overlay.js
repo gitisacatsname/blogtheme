@@ -4,10 +4,11 @@
   document.addEventListener('DOMContentLoaded', () => {
     const root  = qs('#doom-procrastinate');
     const btn   = qs('.doom-open', root);
-    const wrap  = qs('#doom-frame-wrap', root);
-    const frame = qs('#doom-frame', root);
-    const btnFS = qs('.doom-fullscreen', root);
+    const wrap   = qs('#doom-frame-wrap', root);
+    const frame  = qs('#doom-frame', root);
+    const btnFS  = qs('.doom-fullscreen', root);
     const btnClose = qs('.doom-close', root);
+    const rating = qs('.doom-rating', root);
 
     let lastFocus = null;
 
@@ -22,7 +23,23 @@
     }
     frame.addEventListener('load', fixFrame);
 
+    function showRating() {
+      if (rating) { rating.hidden = false; }
+    }
+
+    function hideRating() {
+      if (rating) { rating.hidden = true; }
+    }
+
+    if (rating) {
+      btn.addEventListener('mouseenter', showRating);
+      btn.addEventListener('mouseleave', hideRating);
+      btn.addEventListener('focus', showRating);
+      btn.addEventListener('blur', hideRating);
+    }
+
     function open() {
+      hideRating();
       lastFocus = document.activeElement;
       wrap.hidden = false;
       frame.src = DOOM_OVERLAY_CFG.engineUrl;
