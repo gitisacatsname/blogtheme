@@ -5,15 +5,13 @@ set -euo pipefail
 # Install build dependencies when missing. These are required by
 # the webDOOM project to compile its WebAssembly binaries and mirror
 # the prerequisites from the PrBoom installation guide (SDL and its
-# SDL_mixer/SDL_net extensions).
+# SDL_mixer extension).
 if ! command -v emcc >/dev/null 2>&1 || \
    ! command -v autoheader >/dev/null 2>&1 || \
    ! command -v aclocal >/dev/null 2>&1 || \
    ! command -v pkg-config >/dev/null 2>&1 || \
    ( ! pkg-config --exists SDL_mixer >/dev/null 2>&1 && \
-     ! pkg-config --exists SDL2_mixer >/dev/null 2>&1 ) || \
-   ( ! pkg-config --exists SDL_net >/dev/null 2>&1 && \
-     ! pkg-config --exists SDL2_net >/dev/null 2>&1 ); then
+     ! pkg-config --exists SDL2_mixer >/dev/null 2>&1 ); then
   echo "Installing webDOOM build dependencies..."
   if command -v apt-get >/dev/null 2>&1; then
     PKGS=(
@@ -24,7 +22,6 @@ if ! command -v emcc >/dev/null 2>&1 || \
       pkg-config
       libsdl1.2-dev
       libsdl-mixer1.2-dev
-      libsdl-net1.2-dev
       curl
       git
       unzip
@@ -38,9 +35,9 @@ if ! command -v emcc >/dev/null 2>&1 || \
     $SUDO apt-get install -y "${PKGS[@]}"
   elif command -v brew >/dev/null 2>&1; then
     brew update
-    brew install emscripten autoconf automake libtool pkg-config sdl12-compat sdl2_mixer sdl2_net
+    brew install emscripten autoconf automake libtool pkg-config sdl12-compat sdl2_mixer
   else
-    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config, SDL, SDL_mixer (or SDL2_mixer) and SDL_net (or SDL2_net)." >&2
+    echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config, SDL, and SDL_mixer (or SDL2_mixer)." >&2
     exit 1
   fi
 fi
@@ -74,10 +71,9 @@ fi
 # its related mixer/net libraries, so wire those linker flags directly into the
 # macro's output to ensure the compiler and final link step pull in the bundled
 # implementations.
-# Use SDL2 ports from Emscripten.  The SDL_net and SDL_mixer ports only
-# ship headers under the SDL2/ prefix, so opt in to the SDL2 variants to
-# ensure the corresponding headers and libraries are available.
-SDL_FLAGS="-sUSE_SDL=2 -sUSE_SDL_MIXER=2 -sUSE_SDL_NET=2"
+# Use SDL2 ports from Emscripten. Opt in to the SDL2 variant of SDL_mixer so
+# the necessary headers and libraries are available in the sysroot.
+SDL_FLAGS="-sUSE_SDL=2 -sUSE_SDL_MIXER=2"
 if ! grep -q 'AM_PATH_SDL' "$TMP/webDOOM/acinclude.m4" 2>/dev/null; then
   cat <<EOF >> "$TMP/webDOOM/acinclude.m4"
 AC_DEFUN([AM_PATH_SDL], [
@@ -96,21 +92,38 @@ fi
 export CFLAGS="${CFLAGS:-} ${SDL_FLAGS}"
 export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
 
-# Emscripten's SDL_net headers live under the SDL2/ directory. The PrBoom
-# sources include "SDL_net.h" directly, which fails to resolve when using
-# the SDL2-based ports. Rewrite those includes so the build can locate the
-# header on all platforms. BSD `find` (e.g. on macOS) does not support setting
-# environment variables directly in `-exec`, so pipe the file list through
-# `xargs` and run `sed` with the desired locale.
-find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) -print0 |
-  LC_ALL=C xargs -0 sed -i.bak -e 's|"SDL_net.h"|<SDL2/SDL_net.h>|g'
+# SDL_net support is disabled for this build, so no include rewriting is
+# necessary.
 
-# Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
-# because there are no native `libSDL_mixer` or `libSDL_net` archives to link
-# against. Pre-seed the corresponding cache variables so `configure` believes
-# the dependencies are available and defines the expected feature macros.
+# Update legacy SDL1 key and function names so the sources build against SDL2.
+find "$TMP/webDOOM/src/SDL" -name 'i_video.c' -print0 |
+  LC_ALL=C xargs -0 sed -i.bak \
+    -e 's/SDL_keysym/SDL_Keysym/g' \
+    -e 's/SDLK_KP0/SDLK_KP_0/g' \
+    -e 's/SDLK_KP1/SDLK_KP_1/g' \
+    -e 's/SDLK_KP2/SDLK_KP_2/g' \
+    -e 's/SDLK_KP3/SDLK_KP_3/g' \
+    -e 's/SDLK_KP4/SDLK_KP_4/g' \
+    -e 's/SDLK_KP5/SDLK_KP_5/g' \
+    -e 's/SDLK_KP6/SDLK_KP_6/g' \
+    -e 's/SDLK_KP7/SDLK_KP_7/g' \
+    -e 's/SDLK_KP8/SDLK_KP_8/g' \
+    -e 's/SDLK_KP9/SDLK_KP_9/g' \
+    -e 's/SDLK_LMETA/SDLK_LGUI/g' \
+    -e 's/SDLK_RMETA/SDLK_RGUI/g' \
+    -e 's/SDL_WM_GrabInput/SDL_SetRelativeMouseMode/g' \
+    -e 's/SDL_GRAB_ON/SDL_TRUE/g' \
+    -e 's/SDL_GRAB_OFF/SDL_FALSE/g' \
+    -e 's/SDL_WarpMouse(/SDL_WarpMouseInWindow(NULL, /g'
+
+# Remove obsolete palette handling code not supported by SDL2
+find "$TMP/webDOOM/src/SDL" -name 'i_video.c' -print0 | xargs -0 sed -i.bak '/SDL_SetPalette(/,/);/d'
+
+# Autoconf's library tests for SDL_mixer fail under Emscripten because there
+# is no native `libSDL_mixer` archive to link against. Pre-seed the cache
+# variable so `configure` believes the dependency is available and defines the
+# expected feature macro.
 export ac_cv_lib_SDL_mixer_Mix_OpenAudio=yes
-export ac_cv_lib_SDL_net_SDLNet_UDP_Bind=yes
 
 # The upstream build script links the final binary with a raw `emcc` command.
 # Inject the SDL flags so the produced WebAssembly module bundles the SDL
@@ -142,12 +155,11 @@ chmod +x autotools/config.sub autotools/config.guess
 # would fail under Emscripten when Node.js is unavailable.
 emconfigure ./configure --host=wasm32-unknown-emscripten
 
-# `ac_cv_lib_*` cache variables above convince `configure` that SDL_mixer and
-# SDL_net are present, but the generated `config.h` still leaves their macros
-# undefined. Force-enable them so the SDL sound and networking backends are
-# compiled when using Emscripten's in-tree implementations.
+# The `ac_cv_lib_*` cache variable above convinces `configure` that SDL_mixer is
+# present, but the generated `config.h` still leaves its macro undefined.
+# Force-enable it so the SDL sound backend is compiled when using Emscripten's
+# in-tree implementation.
 sed -i.bak 's/\/\* #undef HAVE_LIBSDL_MIXER \*\//#define HAVE_LIBSDL_MIXER 1/' config.h
-sed -i.bak 's/\/\* #undef HAVE_LIBSDL_NET \*\//#define HAVE_LIBSDL_NET 1/' config.h
 ./build.sh
 mkdir -p "$DEST"
 mv build/web/doom1.js "$DEST/freedoom1.js"
