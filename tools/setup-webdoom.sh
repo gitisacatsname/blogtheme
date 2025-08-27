@@ -103,7 +103,7 @@ export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
 # environment variables directly in `-exec`, so pipe the file list through
 # `xargs` and run `sed` with the desired locale.
 find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) -print0 |
-  xargs -0 -I{} sh -c 'LC_ALL=C sed -i.bak "s|\"SDL_net.h\"|<SDL2/SDL_net.h>|g" "$1"' _ {}
+  LC_ALL=C xargs -0 sed -i.bak -e 's|"SDL_net.h"|<SDL2/SDL_net.h>|g'
 
 # Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
 # because there are no native `libSDL_mixer` or `libSDL_net` archives to link
@@ -134,8 +134,8 @@ pushd "$TMP/webDOOM" >/dev/null
 # recognize the wasm32-unknown-emscripten target. The versions shipped in the
 # upstream repository predate WebAssembly support, causing `configure` to abort
 # when passed the `--host=wasm32-unknown-emscripten` triple.
-curl -L "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD" -o autotools/config.sub
-curl -L "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" -o autotools/config.guess
+curl -L "https://raw.githubusercontent.com/gcc-mirror/gcc/master/config.sub" -o autotools/config.sub
+curl -L "https://raw.githubusercontent.com/gcc-mirror/gcc/master/config.guess" -o autotools/config.guess
 chmod +x autotools/config.sub autotools/config.guess
 # Explicitly set the host triple so Autoconf treats the build as a cross
 # compilation targeting WebAssembly and skips executing test binaries, which
