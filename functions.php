@@ -71,11 +71,13 @@ if ( ! function_exists( 'nc_enqueue_doom_overlay_assets' ) ) {
         wp_enqueue_style( 'doom-overlay', nc_theme_file_uri( $css_rel ), array(), $css_ver );
         wp_enqueue_script( 'doom-overlay', nc_theme_file_uri( $js_rel ), array( 'jquery' ), $js_ver, true );
 
-        wp_localize_script( 'doom-overlay', 'DOOM_OVERLAY_CFG', array(
-            'engineUrl' => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
-            'gamePhase1' => 'freedoom1',
-            'gamePhase2' => 'freedoom2',
-        ) );
+        wp_localize_script(
+            'doom-overlay',
+            'DOOM_OVERLAY_CFG',
+            array(
+                'engineUrl' => 'https://raz0red.github.io/webprboom/',
+            )
+        );
     }
     add_action( 'wp_enqueue_scripts', 'nc_enqueue_doom_overlay_assets' );
 }
@@ -91,8 +93,6 @@ if ( ! function_exists( 'nc_render_doom_overlay' ) ) {
                 <div class="doom-bar">
                     <span class="doom-title">DOOM</span>
                     <div class="doom-spacer"></div>
-                    <button class="doom-iwad doom-iwad-phase1">Freedoom Phase 1</button>
-                    <button class="doom-iwad doom-iwad-phase2">Freedoom Phase 2</button>
                     <button class="doom-fullscreen">Fullscreen</button>
                     <button class="doom-close" aria-label="Close">✕</button>
                 </div>
