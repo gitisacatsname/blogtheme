@@ -12,10 +12,11 @@
 }
 #doom-frame-wrap.full { inset: 0; width: auto; height: auto; border-radius: 0; }
 #doom-frame-wrap .doom-bar {
-  display: flex; align-items: center; gap: .5rem;
+  display: flex; align-items: center; justify-content: space-between;
   background: #1a1a1a; color: #eee; padding: .25rem .5rem; font: 500 12px/1 system-ui, sans-serif;
 }
 #doom-frame { width: 100%; height: calc(100% - 28px); border: 0; display: block; }
-.doom-spacer { flex: 1; }
-.doom-iwad { background: #2c2c2c; color:#eee; border:0; padding:.25rem .5rem; border-radius:.35rem; cursor:pointer; }
-.doom-fullscreen, .doom-close { background: #2c2c2c; color:#eee; border:0; padding:.25rem .5rem; border-radius:.35rem; cursor:pointer; }
+.doom-close { background: #2c2c2c; color:#eee; border:0; padding:.25rem .5rem; border-radius:.35rem; cursor:pointer; }
+#doom-procrastinate .doom-rating {
+  margin-top: .5rem; color: #eee; font: 500 12px/1.2 system-ui, sans-serif;
+}

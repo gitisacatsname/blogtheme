@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var preview = null;
   var doomCanvas = null;
   var fullscreenButton = null;
 
@@ -68,28 +67,20 @@
     }
   }
 
-  function onGameClick (game) {
+  function loadGame (game) {
     var doomScript = document.createElement('script');
     document.body.appendChild(doomScript);
     doomScript.type = 'text/javascript';
-
-    preview.classList.add('hidden');
     doomScript.src = game + '.js';
   }
 
   window.addEventListener('DOMContentLoaded', function () {
-    var games = document.getElementsByClassName('doom');
-      preview = document.getElementById('preview');
-
     document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
     document.exitFullscreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitCancelFullScreen;
 
     document.addEventListener('mozpointerlockchange', onPointerLockChange, false);
     document.addEventListener('pointerlockchange', onPointerLockChange, false);
 
-    games[0].addEventListener('click', onGameClick.bind(null, 'freedoom1'));
-    games[1].addEventListener('click', onGameClick.bind(null, 'freedoom2'));
-    
     fullscreenButton = document.getElementById('fullscreen');
     Module.progress = document.getElementById('progress');
     Module.loader = document.getElementById('loader');
@@ -97,11 +88,6 @@
 
     Module.setStatus = getStatus;
     Module.canvas = getCanvas();
-
-    var params = new URLSearchParams(window.location.search);
-    var autoGame = params.get('game');
-    if (autoGame === 'doom1' || autoGame === 'freedoom1' || autoGame === 'freedoom2') {
-      onGameClick(autoGame);
-    }
+    loadGame('doom1');
   });
 })();
