@@ -38,7 +38,7 @@ if ! command -v emcc >/dev/null 2>&1 || \
     $SUDO apt-get install -y "${PKGS[@]}"
   elif command -v brew >/dev/null 2>&1; then
     brew update
-    brew install emscripten autoconf automake libtool pkg-config sdl12-compat sdl2_mixer sdl2_net
+    brew install emscripten autoconf automake libtool pkg-config sdl sdl_mixer sdl_net
   else
     echo "No supported package manager found. Please install emscripten, autoconf, automake, libtool, pkg-config, SDL, SDL_mixer (or SDL2_mixer) and SDL_net (or SDL2_net)." >&2
     exit 1
@@ -74,10 +74,10 @@ fi
 # its related mixer/net libraries, so wire those linker flags directly into the
 # macro's output to ensure the compiler and final link step pull in the bundled
 # implementations.
-# Use SDL2 ports from Emscripten.  The SDL_net and SDL_mixer ports only
-# ship headers under the SDL2/ prefix, so opt in to the SDL2 variants to
-# ensure the corresponding headers and libraries are available.
-SDL_FLAGS="-sUSE_SDL=2 -sUSE_SDL_MIXER=2 -sUSE_SDL_NET=2"
+# Use the SDL 1.x ports shipped with Emscripten.  PrBoom targets SDL 1.x
+# APIs and fails to build against the SDL2 shims, so request the original
+# libraries and headers from the toolchain.
+SDL_FLAGS="-sUSE_SDL=1 -sUSE_SDL_MIXER=1 -sUSE_SDL_NET=1"
 if ! grep -q 'AM_PATH_SDL' "$TMP/webDOOM/acinclude.m4" 2>/dev/null; then
   cat <<EOF >> "$TMP/webDOOM/acinclude.m4"
 AC_DEFUN([AM_PATH_SDL], [
@@ -95,15 +95,6 @@ fi
 # headers that might not exist in a clean CI environment.
 export CFLAGS="${CFLAGS:-} ${SDL_FLAGS}"
 export LDFLAGS="${LDFLAGS:-} ${SDL_FLAGS}"
-
-# Emscripten's SDL_net headers live under the SDL2/ directory. The PrBoom
-# sources include "SDL_net.h" directly, which fails to resolve when using
-# the SDL2-based ports. Rewrite those includes so the build can locate the
-# header on all platforms. BSD `find` (e.g. on macOS) does not support setting
-# environment variables directly in `-exec`, so pipe the file list through
-# `xargs` and run `sed` with the desired locale.
-find "$TMP/webDOOM" -type f \( -name '*.c' -o -name '*.h' \) -print0 |
-  LC_ALL=C xargs -0 sed -i.bak -e 's|"SDL_net.h"|<SDL2/SDL_net.h>|g'
 
 # Autoconf's library tests for SDL_mixer and SDL_net fail under Emscripten
 # because there are no native `libSDL_mixer` or `libSDL_net` archives to link
