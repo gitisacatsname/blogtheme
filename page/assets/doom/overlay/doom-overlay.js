@@ -34,6 +34,12 @@
 
     btn.addEventListener('click', open);
 
+    selIwad.addEventListener('change', () => {
+      const game = encodeURIComponent(selIwad.value);
+      frame.src = DOOM_OVERLAY_CFG.engineUrl + '?game=' + game;
+      focusFrame();
+    });
+
     btnFS.addEventListener('click', () => {
       const mod = frame.contentWindow?.Module;
       if (typeof mod?.requestFullscreen === 'function') {

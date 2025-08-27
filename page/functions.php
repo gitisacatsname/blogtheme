@@ -794,7 +794,7 @@ function nc_enqueue_doom_overlay_assets() {
         'doom-overlay',
         'DOOM_OVERLAY_CFG',
         array(
-            'engineUrl' => 'https://raz0red.github.io/webprboom/',
+            'engineUrl' => nc_theme_file_uri( 'assets/doom/engine/index.html' ),
         )
     );
 }
