@@ -17,16 +17,17 @@ class DoomOverlayTest extends TestCase {
 
         $themeUri = 'http://example.com/theme/page';
 
-        Monkey\Functions\expect('get_stylesheet_directory')->times(4)->andReturn('/path/theme/page');
+        Monkey\Functions\expect('get_stylesheet_directory')->times(5)->andReturn('/path/theme/page');
         Monkey\Functions\expect('get_theme_file_uri')->once()->with('assets/doom/overlay/doom-overlay.css')->andReturn($themeUri . '/assets/doom/overlay/doom-overlay.css');
         Monkey\Functions\expect('get_theme_file_uri')->once()->with('assets/doom/overlay/doom-overlay.js')->andReturn($themeUri . '/assets/doom/overlay/doom-overlay.js');
+        Monkey\Functions\expect('get_theme_file_uri')->once()->with('assets/doom/engine/index.html')->andReturn($themeUri . '/assets/doom/engine/index.html');
         Monkey\Functions\expect('get_theme_file_path')->once()->with('assets/doom/overlay/doom-overlay.css')->andReturn($tempDir . '/assets/doom/overlay/doom-overlay.css');
         Monkey\Functions\expect('get_theme_file_path')->once()->with('assets/doom/overlay/doom-overlay.js')->andReturn($tempDir . '/assets/doom/overlay/doom-overlay.js');
 
         Monkey\Functions\expect('wp_enqueue_style')->once()->with('doom-overlay', $themeUri . '/assets/doom/overlay/doom-overlay.css', [], $cssMtime);
         Monkey\Functions\expect('wp_enqueue_script')->once()->with('doom-overlay', $themeUri . '/assets/doom/overlay/doom-overlay.js', ['jquery'], $jsMtime, true);
         Monkey\Functions\expect('wp_localize_script')->once()->with('doom-overlay', 'DOOM_OVERLAY_CFG', [
-            'engineUrl' => 'https://raz0red.github.io/webprboom/',
+            'engineUrl' => $themeUri . '/assets/doom/engine/index.html',
         ]);
 
         nc_enqueue_doom_overlay_assets();
