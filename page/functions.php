@@ -805,11 +805,12 @@ function nc_render_doom_overlay() {
     ?>
     <div id="doom-procrastinate">
         <button class="doom-open" aria-haspopup="dialog" aria-controls="doom-frame-wrap">Procrastinate <span class="doom-here">here!</span></button>
-        <p class="doom-rating">Note: This game is rated USK 16. Hinweis: Dieses Spiel hat eine USK-16-Freigabe.</p>
+        <p class="doom-rating">USK 16 – not for under 16s. Nicht für unter 16-Jährige.</p>
 
         <div id="doom-frame-wrap" hidden>
             <div class="doom-bar">
                 <span class="doom-title">DOOM</span>
+                <button class="doom-fullscreen">Fullscreen</button>
                 <button class="doom-close" aria-label="Close">✕</button>
             </div>
             <iframe id="doom-frame" title="DOOM" allow="autoplay; fullscreen; gamepad *" loading="lazy"></iframe>

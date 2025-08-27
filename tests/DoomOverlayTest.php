@@ -47,6 +47,7 @@ class DoomOverlayTest extends TestCase {
         $out = ob_get_clean();
         $this->assertStringContainsString('id="doom-procrastinate"', $out);
         $this->assertStringContainsString('USK 16', $out);
+        $this->assertStringContainsString('doom-fullscreen', $out);
     }
 
     public function test_theme_file_helpers_resolve_paths() {

@@ -2,7 +2,6 @@
 
 (function () {
   var doomCanvas = null;
-  var fullscreenButton = null;
 
   window.Module = {
     monitorRunDependencies: function (toLoad) {
@@ -29,10 +28,6 @@
       event.preventDefault();
     });
 
-    fullscreenButton.addEventListener('click', function () {
-      Module.requestFullscreen(true, false);
-    });
-
     return doomCanvas;
   }
 
@@ -45,7 +40,6 @@
 
       if (progress === 100) {
         setTimeout(function () {
-          fullscreenButton.classList.add('visible');
           Module.loader.classList.add('completed');
           doomCanvas.classList.add('ready');
         }, 500);
@@ -81,7 +75,6 @@
     document.addEventListener('mozpointerlockchange', onPointerLockChange, false);
     document.addEventListener('pointerlockchange', onPointerLockChange, false);
 
-    fullscreenButton = document.getElementById('fullscreen');
     Module.progress = document.getElementById('progress');
     Module.loader = document.getElementById('loader');
     doomCanvas = document.getElementById('doom');

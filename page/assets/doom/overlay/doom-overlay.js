@@ -6,6 +6,7 @@
     const btn   = qs('.doom-open', root);
     const wrap  = qs('#doom-frame-wrap', root);
     const frame = qs('#doom-frame', root);
+    const btnFS = qs('.doom-fullscreen', root);
     const btnClose = qs('.doom-close', root);
 
     let lastFocus = null;
@@ -29,6 +30,14 @@
     }
 
     btn.addEventListener('click', open);
+
+    btnFS.addEventListener('click', () => {
+      const mod = frame.contentWindow?.Module;
+      if (typeof mod?.requestFullscreen === 'function') {
+        mod.requestFullscreen(true, false);
+      }
+      focusFrame();
+    });
 
     btnClose.addEventListener('click', () => {
       wrap.hidden = true;
