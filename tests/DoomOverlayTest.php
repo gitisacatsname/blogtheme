@@ -48,6 +48,9 @@ class DoomOverlayTest extends TestCase {
         $this->assertStringContainsString('id="doom-procrastinate"', $out);
         $this->assertStringContainsString('USK 16', $out);
         $this->assertStringContainsString('doom-fullscreen', $out);
+        $this->assertStringContainsString('aria-describedby="doom-usk"', $out);
+        $this->assertStringContainsString('id="doom-usk"', $out);
+        $this->assertStringContainsString('class="doom-rating" hidden', $out);
     }
 
     public function test_theme_file_helpers_resolve_paths() {
