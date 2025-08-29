@@ -1,9 +1,7 @@
 'use strict';
 
 (function () {
-  var preview = null;
   var doomCanvas = null;
-  var fullscreenButton = null;
 
   window.Module = {
     monitorRunDependencies: function (toLoad) {
@@ -30,10 +28,6 @@
       event.preventDefault();
     });
 
-    fullscreenButton.addEventListener('click', function () {
-      Module.requestFullscreen(true, false);
-    });
-
     return doomCanvas;
   }
 
@@ -46,7 +40,6 @@
 
       if (progress === 100) {
         setTimeout(function () {
-          fullscreenButton.classList.add('visible');
           Module.loader.classList.add('completed');
           doomCanvas.classList.add('ready');
         }, 500);
@@ -72,25 +65,16 @@
     var doomScript = document.createElement('script');
     document.body.appendChild(doomScript);
     doomScript.type = 'text/javascript';
-
-    preview.classList.add('hidden');
     doomScript.src = game + '.js';
   }
 
   window.addEventListener('DOMContentLoaded', function () {
-    var games = document.getElementsByClassName('doom');
-      preview = document.getElementById('preview');
-
     document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
     document.exitFullscreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitCancelFullScreen;
 
     document.addEventListener('mozpointerlockchange', onPointerLockChange, false);
     document.addEventListener('pointerlockchange', onPointerLockChange, false);
 
-    games[0].addEventListener('click', onGameClick.bind(null, 'freedoom1'));
-    games[1].addEventListener('click', onGameClick.bind(null, 'freedoom2'));
-    
-    fullscreenButton = document.getElementById('fullscreen');
     Module.progress = document.getElementById('progress');
     Module.loader = document.getElementById('loader');
     doomCanvas = document.getElementById('doom');
@@ -100,8 +84,10 @@
 
     var params = new URLSearchParams(window.location.search);
     var autoGame = params.get('game');
-    if (autoGame === 'doom1' || autoGame === 'freedoom1' || autoGame === 'freedoom2') {
+    if (autoGame === 'doom1') {
       onGameClick(autoGame);
+    } else {
+      onGameClick('doom1');
     }
   });
 })();
