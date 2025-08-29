@@ -1,3 +1,3 @@
 # webDOOM Engine
 
-Binary engine files are not stored in the repository. Run `tools/setup-webdoom.sh` to build and download the Freedoom WebAssembly engine and assets into this directory.
+Binary engine files are not stored in the repository. Place the DOOM shareware WebAssembly engine and assets in this directory.

@@ -46,10 +46,9 @@ class DoomOverlayTest extends TestCase {
         nc_render_doom_overlay();
         $out = ob_get_clean();
         $this->assertStringContainsString('id="doom-procrastinate"', $out);
-        $this->assertStringContainsString('class="doom-iwad"', $out);
-        $this->assertStringContainsString('value="doom1"', $out);
-        $this->assertStringContainsString('value="freedoom1"', $out);
-        $this->assertStringContainsString('value="freedoom2"', $out);
+        $this->assertStringContainsString('class="doom-usk"', $out);
+        $this->assertStringContainsString('class="doom-fullscreen"', $out);
+        $this->assertStringContainsString('USK 16', $out);
     }
 
     public function test_theme_file_helpers_resolve_paths() {
